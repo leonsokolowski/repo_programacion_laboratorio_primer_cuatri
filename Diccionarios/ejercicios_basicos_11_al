@@ -1,0 +1,24 @@
+"""
+13. Crea un diccionario que contenga el nombre y el nivel de dificultad de varios juegos de mesa. 
+Luego, pedirle al usuario un nivel de dificultad, buscar los que coinciden e imprimir sus nombres
+
+"""
+
+info_juegos_de_mesa = {
+    "Monopoly" : "intermedio",
+    "Truco" : "facil",
+    "Canasta" : "facil",
+    "Poker" : "dificil"
+}
+
+nivel_de_dificultad = input("Ingrese el nivel de dificultad: ")
+
+print("Usando items")
+for clave, valor in info_juegos_de_mesa.items():
+    if valor == nivel_de_dificultad:
+        print(clave)
+
+print("Usando keys")
+for clave in info_juegos_de_mesa.keys():
+    if info_juegos_de_mesa[clave] == nivel_de_dificultad:
+        print(clave)
