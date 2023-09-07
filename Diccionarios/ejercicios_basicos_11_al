@@ -22,3 +22,6 @@ print("Usando keys")
 for clave in info_juegos_de_mesa.keys():
     if info_juegos_de_mesa[clave] == nivel_de_dificultad:
         print(clave)
+        
+
+
