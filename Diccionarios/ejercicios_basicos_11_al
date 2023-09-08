@@ -1,7 +1,38 @@
 """
+11. Crea un diccionario que represente una lista de tareas por hacer. Cada clave del diccionario debe ser el nombre de una tarea
+y cada valor debe ser su estado (los estados son:  pendiente, en proceso, completada). Imprimir todas las tareas seguido de su estado
+"""
+tareas_hogar = {
+    "colgar la ropa:" : "completada",
+    "hacer la comida:" : "completada",
+    "hacer la cama:" : "completada",
+    "ordenar el cuarto:" : "en proceso",
+    "alimentar al gato:" : "pendiente",
+    "lavar los platos:" : "pendiente",
+}
+
+for clave, valor in tareas_hogar.items():
+    print(clave, valor)
+    
+"""
+12. Crea un diccionario que represente una lista de las compras. Cada clave del diccionario debe ser el nombre de un producto
+y cada valor debe ser su cantidad. Pedir al usuario que ingrese el nombre del producto e imprimir la cantidad
+"""
+compras_super = {
+    "galletitas" : 5,
+    "aceite" : 1,
+    "leche" : 3,
+    "jugos" : 8
+}
+
+producto_ingresado = input("Ingrese el producto: ")
+
+cantidad_de_producto_ingresado = compras_super.get(producto_ingresado , "El producto ingresado no esta en la lista de compras")
+print (cantidad_de_producto_ingresado)
+
+"""
 13. Crea un diccionario que contenga el nombre y el nivel de dificultad de varios juegos de mesa. 
 Luego, pedirle al usuario un nivel de dificultad, buscar los que coinciden e imprimir sus nombres
-
 """
 
 info_juegos_de_mesa = {
@@ -22,6 +53,107 @@ print("Usando keys")
 for clave in info_juegos_de_mesa.keys():
     if info_juegos_de_mesa[clave] == nivel_de_dificultad:
         print(clave)
-        
+
+"""
+14. Crea un diccionario que contenga el nombre como clave y el puntaje como valor de varios jugadores en un juego. 
+Luego, pedirle al usuario el nombre del jugador y nuevo puntaje y actualizar el valor correspondiente en el diccionario.
+"""
+puntuacion_videojuego = {
+    "Leon" : 40,
+    "Tani" : 95,
+    "Mati" : 70,
+    "Chechu" : 100,
+    "Marce" : 65,
+    "Nacho" : 80,
+    "Cris" : 90
+}
+nuevo_puntaje_nombre = input("Ingrese el nombre del jugador: ").capitalize()
+
+while not nuevo_puntaje_nombre in puntuacion_videojuego.keys():
+    mensaje = f"El jugador {nuevo_puntaje_nombre} no existe, ingrese otro:"
+    nuevo_puntaje_nombre = input(mensaje).capitalize()
+
+while not nuevo_puntaje_nombre in puntuacion_videojuego.keys():
+    mensaje = "El jugador ingresado no se encuentra en la base de datos, por favor ingrese otro: "
+    nuevo_puntaje_nombre = input(mensaje)
+
+
+nuevo_puntaje_valor = input("Ingrese el nuevo puntaje: ")
+
+puntuacion_videojuego[nuevo_puntaje_nombre] = nuevo_puntaje_valor
+
+print(f"El puntaje de  {nuevo_puntaje_nombre} fue actualizado. La tabla está así ahora: {puntuacion_videojuego}")
+
+"""
+15.Crea un diccionario que contenga el nombre y el sueldo de varios empleados. 
+Luego, permite al usuario aumentar el sueldo de un empleado y actualizar el valor correspondiente en el diccionario.
+"""
+sueldo_empleados = {
+    "Mario" : 80000,
+    "Silvia" : 150000,
+    "Renata" : 76500
+}
+
+nombre_empleado = input("Ingrese el nombre del empleado: ").capitalize()
+
+while not nombre_empleado in sueldo_empleados.keys():
+    mensaje = f"{nombre_empleado} no es un empleado, ingrese un nombre valido:"
+    nombre_empleado = input(mensaje).capitalize()
+
+aumento_empleado = input("Ingrese el nuevo monto del empleado: ")
+
+while not int(aumento_empleado) > sueldo_empleados[nombre_empleado]:
+    mensaje = f"¡Para realizar un aumento el nuevo monto debe ser mayor que el anterior! Ingrese uno valido: "
+    aumento_empleado = input(mensaje)
+
+sueldo_empleados [nombre_empleado] = aumento_empleado
+
+print(f"El sueldo de {nombre_empleado} aumentó. Así quedaron los sueldos {sueldo_empleados}")
+
+"""
+16.Crea un diccionario que represente una lista de tareas pendientes, donde las claves son las tareas 
+y los valores son "True" si están completadas y "False" si no lo están. 
+Solicita al usuario el nombre de una tarea y modifica el valor para marcarla como completada. Imprimir el listado de tareas pendientes
+"""
+
+"""
+17.Crea un diccionario que represente las películas de un cine, donde las claves son los nombres de las películas 
+y los valores son los horarios correspondientes. Modifica el horario de la película "Avengers: Endgame" a las 19:30.
+"""
+
+"""
+18.Crea un diccionario que represente los juegos de una consola, donde las claves son los nombres de los juegos 
+y los valores son las puntuaciones correspondientes. 
+Solicita al usuario el nombre de un juego y luego su puntuación, si el juego no existe agregarlo y si existe actualizar su puntuación
+"""
+
+"""
+19. Crea un diccionario que represente las temperaturas de una ciudad durante una semana, 
+donde las claves son los días de la semana y los valores son las temperaturas correspondientes. 
+Calcula la temperatura promedio de la semana.
+"""
+
+"""
+20. Crea un diccionario que represente los asientos de un avión, donde las claves son los números de asientos 
+y los valores son "True" si están ocupados y "False" si no lo están. 
+Solicita al usuario un número de asiento y modifica su valor para marcarlo como ocupado. Luego imprimí la lista de asientos libres
+"""
+
+"""
+21. Crea un diccionario que represente los gastos de una persona en diferentes categorías, donde las claves son los nombres de las categorías
+y los valores son los gastos correspondientes. Calcula el total de gastos de la persona.
+"""
+
+"""
+22. Crea un diccionario que represente los gastos de una persona en diferentes categorías, 
+donde las claves son los nombres de las categorías y los valores son los gastos correspondientes. 
+Calcula el total de gastos de la persona en el mes.
+"""
+
+"""
+23. Crea un diccionario que represente los contactos de un teléfono, donde las claves son los nombres de las personas 
+y los valores son los números de teléfono correspondientes. Solicitar al usuario el nombre de un contacto: agregarlo al diccionario 
+en caso de que no exista. En caso de que exista modificar el número de teléfono del contacto.
+"""       
 
 
