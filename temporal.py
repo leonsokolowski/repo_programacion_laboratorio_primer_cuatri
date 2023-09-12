@@ -22,6 +22,11 @@ def calcular_mcd(a, b):
         a, b = b, a % b
     return a
 
-resto = 48 % 18
-print(resto)
+a = 48
+b = 18
+
+mcd = calcular_mcd(a, b)
+
+print(f"El MCD de {a} y {b} es {mcd}")
+
 
