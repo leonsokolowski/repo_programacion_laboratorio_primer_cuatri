@@ -1,4 +1,10 @@
 """
+León Sokolowski
+León Sokolowski
+División H
+Grupo Alpha
+"""
+"""
 11. Crea un diccionario que represente una lista de tareas por hacer. Cada clave del diccionario debe ser el nombre de una tarea
 y cada valor debe ser su estado (los estados son:  pendiente, en proceso, completada). Imprimir todas las tareas seguido de su estado
 """
@@ -70,11 +76,7 @@ puntuacion_videojuego = {
 nuevo_puntaje_nombre = input("Ingrese el nombre del jugador: ").capitalize()
 
 while not nuevo_puntaje_nombre in puntuacion_videojuego.keys():
-    mensaje = f"El jugador {nuevo_puntaje_nombre} no existe, ingrese otro:"
-    nuevo_puntaje_nombre = input(mensaje).capitalize()
-
-while not nuevo_puntaje_nombre in puntuacion_videojuego.keys():
-    mensaje = "El jugador ingresado no se encuentra en la base de datos, por favor ingrese otro: "
+    mensaje = f"El jugador {nuevo_puntaje_nombre} no se encuentra en la base de datos, por favor ingrese otro: "
     nuevo_puntaje_nombre = input(mensaje)
 
 
@@ -115,40 +117,145 @@ print(f"El sueldo de {nombre_empleado} aumentó. Así quedaron los sueldos {suel
 y los valores son "True" si están completadas y "False" si no lo están. 
 Solicita al usuario el nombre de una tarea y modifica el valor para marcarla como completada. Imprimir el listado de tareas pendientes
 """
+tareas = {
+    "cocinar" : True,
+    "trabajar": False,     
+    "estudiar" : False,
+    "limpiar" : False
+}
 
+tarea_a_completar = input("Nombrar una tarea: ")
+
+while tareas.get(tarea_a_completar) is True:
+    mensaje = "Esa tarea ya está completada, ingrese otra: "
+    tarea_a_completar = input(mensaje)
+else:
+    tareas[tarea_a_completar] = True
+    mensaje = "¡Felicidades! La tarea fue completada"
+    print(mensaje)
+    print(tareas)
+    
 """
 17.Crea un diccionario que represente las películas de un cine, donde las claves son los nombres de las películas 
 y los valores son los horarios correspondientes. Modifica el horario de la película "Avengers: Endgame" a las 19:30.
 """
+peliculas_de_cine = {
+    "Avengers: Endgame" : "16:00",
+    "The Batman" : "13:00",
+    "Fight Club" : "22:45",
+    "Barbie" : "15:15"
+}
+
+peliculas_de_cine["Avengers: Endgame"] = "19:30"
 
 """
 18.Crea un diccionario que represente los juegos de una consola, donde las claves son los nombres de los juegos 
 y los valores son las puntuaciones correspondientes. 
 Solicita al usuario el nombre de un juego y luego su puntuación, si el juego no existe agregarlo y si existe actualizar su puntuación
 """
+juegos_de_consola = {
+    "The Last of Us" : 10.0,
+    "God of war" : 8.5,
+    "Red Dead Redemption 2" : 9
+}
+
+nombre_juego = input("Ingrese el nombre de un juego: ").capitalize()
+
+puntuacion_juego = input("Ingrese la puntuanción que usted le da a ese videojuego: ")
+juegos_de_consola[nombre_juego] = puntuacion_juego
+
+print(f"La tabla fue actualizada: {juegos_de_consola}")
 
 """
 19. Crea un diccionario que represente las temperaturas de una ciudad durante una semana, 
 donde las claves son los días de la semana y los valores son las temperaturas correspondientes. 
 Calcula la temperatura promedio de la semana.
 """
+temperaturas_semana = {
+    "Lunes" : 19,
+    "Martes" : 17,
+    "Miercoles" : 16,
+    "Jueves" : 18,
+    "Viernes" : 19,
+    "Sabado" : 19,
+    "Domingo" : 20 
+}
+
+acumulador_temperaturas = 0
+cantidad_temperaturas = len(temperaturas_semana)
+
+for valor in temperaturas_semana.values():
+    acumulador_temperaturas += valor
+
+promedio_temperaturas = acumulador_temperaturas // cantidad_temperaturas
+
+print(f"El promedio de temperaturas de la semana es {promedio_temperaturas}")
 
 """
 20. Crea un diccionario que represente los asientos de un avión, donde las claves son los números de asientos 
 y los valores son "True" si están ocupados y "False" si no lo están. 
 Solicita al usuario un número de asiento y modifica su valor para marcarlo como ocupado. Luego imprimí la lista de asientos libres
 """
+asientos_avion = {
+    "1" : True,
+    "2": False,     
+    "3" : False,
+    "4" : False,
+    "5" : True,
+    "6" : False,
+    "7" : False,
+    "8" : True,
+    "9" : True
+}
+
+numero_asiento = input("Ingrese su numero de asiento: ")
+
+while asientos_avion.get(numero_asiento) is True:
+    mensaje = "Ese asiento ya está ocupado, ingrese otro: "
+    numero_asiento = input(mensaje)
+else:
+    asientos_avion[numero_asiento] = True
+    mensaje = "Su asiento fue asignado con éxito"
+    print(mensaje)
+    print(asientos_avion)
+
 
 """
 21. Crea un diccionario que represente los gastos de una persona en diferentes categorías, donde las claves son los nombres de las categorías
 y los valores son los gastos correspondientes. Calcula el total de gastos de la persona.
 """
+gastos_anuales = {
+    "Comida" : 720000,
+    "Alquiler" : 1200000,
+    "Impuestos y servicios" : 300000,
+    "Viaticos" : 240000
+}
+
+acumulador_total_gastos = 0
+
+for valor in gastos_anuales.values():
+    acumulador_total_gastos += valor
+
+print(f"El total de gastos mensuales de una persona es de {acumulador_total_gastos}")
 
 """
 22. Crea un diccionario que represente los gastos de una persona en diferentes categorías, 
 donde las claves son los nombres de las categorías y los valores son los gastos correspondientes. 
 Calcula el total de gastos de la persona en el mes.
 """
+gastos_mensuales = {
+    "Comida" : 60000,
+    "Alquiler" : 100000,
+    "Impuestos y servicios" : 25000,
+    "Viaticos" : 20000
+}
+
+acumulador_total_gastos = 0
+
+for valor in gastos_mensuales.values():
+    acumulador_total_gastos += valor
+
+print(f"El total de gastos mensuales de una persona es de {acumulador_total_gastos}")
 
 """
 23. Crea un diccionario que represente los contactos de un teléfono, donde las claves son los nombres de las personas 
@@ -156,4 +263,17 @@ y los valores son los números de teléfono correspondientes. Solicitar al usuar
 en caso de que no exista. En caso de que exista modificar el número de teléfono del contacto.
 """       
 
+contactos = {
+    "Olga" : "11 9645 - 2574",
+    "Marcelo" : "11 2774 - 1612",
+    "Rufina" : "11 6414 - 2769",
+    "Juan" : "11 6062 - 1901"
+}
+
+contacto_elegido = input("Ingrese el nombre de su contacto: ").capitalize()
+
+numero_del_contacto = input("Ingrese el numero de telefono de su contacto: ")
+contactos[contacto_elegido] = numero_del_contacto
+
+print(f"La agenda fue actualizada: {contactos}")
 

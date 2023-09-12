@@ -341,6 +341,8 @@ def determina_heroe_mas_alto (lista_heroes : list[dict]) -> dict :
 heroe_mas_alto = determina_heroe_mas_alto (lista_personajes)
 print(obtener_nombre(heroe_mas_alto))
 
+#D
+
 #J. Construir un menú que permita elegir que dato obtener.
 
 def mostrar_menu(lista_heroes: list[dict]):
