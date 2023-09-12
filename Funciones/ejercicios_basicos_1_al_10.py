@@ -112,6 +112,18 @@ def calcula_area_triangulo (base : float , altura : float) -> float:
 7. Crear una función que calcule el máximo común divisor de dos números. Recibe dos parámetros (números) y devuelve el máximo común divisor.
 """
 
+def calcular_maximo_comun_divisor(numero_1 : int, numero_2 : int) -> int:
+    """
+    
+    """
+    while numero_2 != 0:
+        numero_1, numero_2 = numero_2, numero_1 % numero_2
+    
+    return numero_1
+
+mcd = calcular_maximo_comun_divisor(36, 24)
+
+print(mcd)
 
 """
 8. Crear una función que verifique si un número es par o impar. Recibe un número como parámetro y devuelve True si es par o False si es impar.
