@@ -1,0 +1,4 @@
+from datos_stark_00 import lista_personajes
+from desafio_stark_00 import main_app
+
+main_app(lista_personajes)
