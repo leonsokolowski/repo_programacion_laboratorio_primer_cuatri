@@ -59,6 +59,7 @@ def determina_heroe_mas_alto (lista_heroes : list[dict]) -> dict :
 
 
 
+
 #E. Recorrer la lista y determinar cuál es el superhéroe más bajo (MÍNIMO)
 
 def determina_heroe_mas_bajo (lista_heroes : list[dict]) -> dict :
@@ -107,14 +108,14 @@ def obtener_identidad (heroe: dict) -> str:
     identidad = heroe.get("identidad")
     return identidad
 
-def muestra_identidad_del_heroe_alto_y_bajo ():
+def muestra_identidad_del_heroe_alto_y_bajo (lista_heroes : list):
   """
   Muestra la identidad del heroe más alto y del heroe más bajo.
   Recibe: nada.
   Devuelve: nada.
   """
-  mensaje = f"La identidad del heroe más alto es: {obtener_identidad(heroe_mas_alto)}\n\
-  La identidad del heroe más bajo es: {obtener_identidad(heroe_mas_bajo)}"
+  mensaje = f"La identidad del heroe más alto es: {obtener_identidad(determina_heroe_mas_alto(lista_heroes))}\n\
+  La identidad del heroe más bajo es: {obtener_identidad(determina_heroe_mas_bajo(lista_heroes))}"
   print(mensaje)
 
 #H. Calcular e informar cual es el superhéroe más y menos pesado.

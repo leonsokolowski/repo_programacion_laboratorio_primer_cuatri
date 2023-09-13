@@ -43,7 +43,7 @@ def main_app(lista_heroes: list[dict]):
                 promedio_alturas = realiza_promedio_de_alturas(lista_heroes)
                 print(f"El promedio de alturas es: {promedio_alturas}")   
             case "6":
-                muestra_identidad_del_heroe_alto_y_bajo ()   
+                muestra_identidad_del_heroe_alto_y_bajo (lista_heroes)   
             case "7":
                 heroe_mas_pesado = determina_heroe_mas_pesado (lista_heroes)
                 print(f"El heroe mas pesado es: {obtener_nombre(heroe_mas_pesado)}")
