@@ -1,4 +1,4 @@
-from datos_stark_00 import lista_personajes
+from datos_stark import lista_personajes
 #import  biblioteca_stark_00 
 #from biblioteca_stark_00 import * #importa TODAS LAS FUNCIONES
 from biblioteca_stark_00 import (

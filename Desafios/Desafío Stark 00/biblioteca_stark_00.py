@@ -1,4 +1,4 @@
-from datos_stark_00 import lista_personajes
+from datos_stark import lista_personajes
 
 #A
 
