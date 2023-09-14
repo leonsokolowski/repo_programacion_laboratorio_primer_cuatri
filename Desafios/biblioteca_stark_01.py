@@ -80,7 +80,21 @@ def informar_nombre_heroes_mas_altos_y_mas_bajos (lista_heroes):
     El nombre de la heroína más baja es: {nombre_f_mas_baja}."
     print(mensaje)
 
+def cantidad_heroes_por_color_ojos (lista_heroes : list[dict]):
+    
+    cantidad_color_ojos = {}
 
+    for heroe in lista_heroes:
+        color_ojos = heroe.get("color_ojos")
+        cantidad_color_ojos.update({color_ojos : "1"})
+        
+    
+
+def cantidad_heroes_por_color_pelo ():
+    pass
+
+def cantidad_heroes_por_tipo_inteligencia ():
+    pass
 
 # A. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género M
 
