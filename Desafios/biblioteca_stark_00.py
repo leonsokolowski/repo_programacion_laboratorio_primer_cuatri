@@ -158,11 +158,7 @@ def determina_heroe_menos_pesado (lista_heroes : list[dict]) -> dict :
 def pedir_opcion_menu () -> str:
     return input("Elija una opcion: ")
 def mostrar_menu() -> str:
-    """
-    Ejecuta todo nuestro programa.
-    Recibe: lista de heroes.
-    Devuelve: nada.
-    """
+  
     menu = \
     """
     1. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe

@@ -290,38 +290,41 @@ lista_personajes =\
   }
 ]
 
-# def cantidad_heroes_por_color_ojos (lista_heroes : list[dict]):
-    
-#     cantidad_color_ojos = {}
 
-#     for heroe in lista_heroes:
-#         color_ojos = heroe.get("color_ojos")
-#         cantidad_color_ojos.update({color_ojos : +1})
+def obtener_diccionario_por_tipo_inteligencia (lista_heroes : list[dict]) -> dict:
+  
+  diccionario_tipo_inteligencia = {}
     
-#     print(cantidad_color_ojos)
-    
-# cantidad_heroes_por_color_ojos(lista_personajes)
+  for heroe in lista_heroes:
+    tipo = heroe.get("inteligencia", "Sin tipo")
+    diccionario_tipo_inteligencia[tipo] = []
 
-def cantidad_heroes_por_color_ojos (lista_heroes : list[dict]):
-    
-    lista_color_ojos = []
-    lista_cantidad_color = []
-    
-    for heroe in lista_heroes:
-        color_ojos = heroe.get("color_ojos")
-        lista_color_ojos.append(color_ojos)
-    
-    # cantidad = lista_color_ojos.count(color_ojos)
-    # lista_cantidad_color.append(cantidad)
-    for color in lista_color_ojos:
-        cantidad = lista_color_ojos.count(color)
-        lista_cantidad_color.append(cantidad)
-    
-    print(lista_color_ojos)
-    print(lista_cantidad_color)
-    
+  
+  return diccionario_tipo_inteligencia
 
+def enlistar_heroes_por_tipo_inteligencia (diccionario : dict, lista_heroes : list[dict]) -> dict:
+  diccionario = obtener_diccionario_por_tipo_inteligencia(lista_heroes)
+  
+  for heroe in lista_heroes:
+    tipo = heroe.get("inteligencia")
+    nombre = heroe.get("nombre")
+    diccionario[tipo].append(nombre)
+  
+  return diccionario  
 
+def mostrar_lista_heroes_por_tipo_inteligencia (diccionario: dict):
+  
+  for clave, valor in diccionario.items():
+    mensaje = f"Los heroes con el nivel de intelgencia {clave} son {valor}"
+    print(mensaje)
+
+mostrar_lista_heroes_por_tipo_inteligencia(enlistar_heroes_por_tipo_inteligencia(obtener_diccionario_por_tipo_inteligencia(lista_personajes),lista_personajes))
+
+  
+
+      
+  
     
-cantidad_heroes_por_color_ojos(lista_personajes)
+  
+    
     
