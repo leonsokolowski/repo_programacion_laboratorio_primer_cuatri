@@ -1,31 +1,50 @@
 """
 1. Escribir una función que reciba un string y devuelva el mismo string todo en mayúsculas.
 """
+string_a_mayusculas = lambda cadena: cadena.upper()
+
+#print(string_a_mayusculas("hola"))
 
 """
 2. Escribir una función que reciba un string y devuelva el mismo string todo en minúsculas.
 """
+string_a_minisculas = lambda cadena: cadena.lower()
+
+#print(string_a_mayusculas("MUNDO"))
 
 """
 3. Escribir una función que tome dos strings y devuelva un nuevo string que contenga ambos strings concatenados, separados por un espacio.
 """
+strings_concatenados = lambda cadena_1, cadena_2 : f"{cadena_1} {cadena_2}"
+
+#print(strings_concatenados("Playco" , "Armboy"))
 
 """
 4. Escribir una función que tome un string y devuelva el número de caracteres que tiene el string.
 """
+numero_de_caracteres_string = lambda cadena : len(cadena)
+
+#print(numero_de_caracteres_string("agropecuario"))
 
 """
 5. Escribir una función que tome un string y un carácter y devuelva el número de veces que aparece ese carácter en el string.
 """
+contar_caracter_en_string = lambda cadena , caracter : cadena.count(caracter)
+
+#print(contar_caracter_en_string("atalaya" , "a"))
 
 """
 6. Escribir una función que tome un string y un carácter y devuelva una lista con todas las palabras en el string que contienen ese carácter.
 """
+def contar_palabras_con_caracter_en_lista (cadena : str , caracter : str):
+    pass
 
 """
 7. Escribir una función que tome un string y devuelva el mismo string con los espacios eliminados
 """
+eliminar_espacios_string = lambda cadena : cadena.strip()
 
+#print(eliminar_espacios_string ("      Buenas       "))
 """
 8. Escribir una función que reciba dos string (nombre y apellido) y devuelva un diccionario 
 con el nombre y apellido, eliminando los espacios del comienzo y el final y colocando la primer letra en mayúscula
