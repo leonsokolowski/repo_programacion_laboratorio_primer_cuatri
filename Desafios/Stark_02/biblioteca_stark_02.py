@@ -7,10 +7,10 @@ def normalizar_datos_stark (lista_heroes : list[dict]):
     Recibe: una lista de diccionarios.
     Devuelve: nada.
     """
-    for heroe in lista_heroes:
-        if lista_heroes == []:
-            mensaje = "Error: Lista de héroes vacía"
-        else:    
+    if lista_heroes == []:
+        mensaje = "Error: Lista de héroes vacía"
+    else:    
+        for heroe in lista_heroes:
             altura = heroe.get("altura")
             if type(altura) != float:
                 altura = float(altura)
