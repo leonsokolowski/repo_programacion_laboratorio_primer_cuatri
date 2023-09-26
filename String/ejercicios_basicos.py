@@ -3,7 +3,6 @@
 """
 string_a_mayusculas = lambda cadena: cadena.upper()
 
-#print(string_a_mayusculas("hola"))
 
 """
 2. Escribir una función que reciba un string y devuelva el mismo string todo en minúsculas.
@@ -82,13 +81,25 @@ gmail_persona = lambda nombre , apellido : f"{nombre[0]}.{apellido}@utn-fra.com.
 palabras concatenadas con comas y "y" antes de la última palabra. Por ejemplo, si la lista es 
 ["manzanas", "naranjas", "bananas"], el string resultante debería ser "manzanas, naranjas y bananas"..
 """
+lista_frutas = ["manzanas", "naranjas", "bananas" , "peras" , "frutillas"]
+def enumerar_lista (lista_palabras : list) -> str:
+    
+    cadena = " y "
+    cadena = cadena.join(lista_palabras)
+    repeticion_de_y = cadena.count(" y ")
+    cadena = cadena.replace(" y " , ", ", repeticion_de_y - 1)
+    return cadena
 
+#print(enumerar_lista(lista_frutas))
+    
 
 """
 12. Escribir una función que tome un número de tarjeta de crédito como input, verificar que todos los
 caracteres sean numéricos y devolver los últimos cuatro dígitos y los primeros dígitos como asteriscos, 
 por ejemplo: "**** **** **** 1234". 
 """
+def tomar_numero_de_tarjeta () -> str:
+    numero_tarjeta = input("Ingrese el número de su tarjeta: ")
 
 """
 13. Escribir una función que tome un correo electrónico y elimine cualquier carácter después del símbolo @, 
@@ -134,3 +145,4 @@ separada por punto y coma, por ejemplo: ["juan@gmail.com", "maria@hotmail.com"] 
 21. Crear una función que reciba como parámetro un string y devuelva un diccionario donde cada clave 
 es una palabra y cada valor es un entero que indica cuántas veces aparece esa palabra dentro del string.
 """
+
