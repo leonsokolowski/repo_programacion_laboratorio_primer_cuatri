@@ -36,8 +36,7 @@ contar_caracter_en_string = lambda cadena , caracter : cadena.count(caracter)
 """
 6. Escribir una función que tome un string y un carácter y devuelva una lista con todas las palabras en el string que contienen ese carácter.
 """
-def contar_palabras_con_caracter_en_lista (cadena : str , caracter : str):
-    pass
+
 
 """
 7. Escribir una función que tome un string y devuelva el mismo string con los espacios eliminados
@@ -49,21 +48,41 @@ eliminar_espacios_string = lambda cadena : cadena.strip()
 8. Escribir una función que reciba dos string (nombre y apellido) y devuelva un diccionario 
 con el nombre y apellido, eliminando los espacios del comienzo y el final y colocando la primer letra en mayúscula
 """
+def crear_un_diccionario_a_partir_de_dos_strings (nombre : str , apellido : str) -> dict:
+    diccionario_personas = {}
+    nombre = nombre.strip().capitalize()
+    apellido = apellido.strip().capitalize()
+    mensaje = f"{nombre} {apellido}"
+    
+    diccionario_personas.update({"nombre y apellido" : mensaje})
+    return diccionario_personas
+
+#print(crear_un_diccionario_a_partir_de_dos_strings("    leon  " , "      sokolowski       "))
 
 """
 9. Escribir una función que tome una lista de nombres y los una en una sola cadena separada por un
 salto de línea, por ejemplo: ["Juan", "María", "Pedro"] -> "Juan\nMaría\nPedro".
 """
+lista_de_nombres = ["Juan", "María", "Pedro"]
+cadena = "\n"
+cadena_con_saltos = lambda lista : cadena.join(lista)
+
+#print(cadena_con_saltos(lista_de_nombres))
+
 
 """
 10. Escribir una función que tome un nombre y un apellido y devuelva un email en formato "inicial_nombre.apellido@utn-fra.com.ar".
 """
+gmail_persona = lambda nombre , apellido : f"{nombre[0]}.{apellido}@utn-fra.com.ar".lower()
+
+#print(gmail_persona("León" , "Sokolowski"))
 
 """
 11. Escribir una función que tome una lista de palabras y devuelva un string que contenga todas las 
 palabras concatenadas con comas y "y" antes de la última palabra. Por ejemplo, si la lista es 
 ["manzanas", "naranjas", "bananas"], el string resultante debería ser "manzanas, naranjas y bananas"..
 """
+
 
 """
 12. Escribir una función que tome un número de tarjeta de crédito como input, verificar que todos los
