@@ -35,7 +35,18 @@ contar_caracter_en_string = lambda cadena , caracter : cadena.count(caracter)
 """
 6. Escribir una función que tome un string y un carácter y devuelva una lista con todas las palabras en el string que contienen ese carácter.
 """
+#Forma 1
+def filtrar_palabras_segun_caracter (cadena , caracter) -> str:
+    palabras_filtradas = []
+    palabras_general = cadena.split()
+    
+    for palabra in palabras_general:
+        if caracter in palabra:
+            palabras_filtradas.append(palabra)
 
+    return palabras_filtradas
+
+#print(filtrar_palabras_segun_caracter("Hey muy buenas a todos guapisimos, aqui Vegetta777" , "e"))
 
 """
 7. Escribir una función que tome un string y devuelva el mismo string con los espacios eliminados
@@ -51,9 +62,9 @@ def crear_un_diccionario_a_partir_de_dos_strings (nombre : str , apellido : str)
     diccionario_personas = {}
     nombre = nombre.strip().capitalize()
     apellido = apellido.strip().capitalize()
-    mensaje = f"{nombre} {apellido}"
     
-    diccionario_personas.update({"nombre y apellido" : mensaje})
+    diccionario_personas.update({"nombre" : nombre})
+    diccionario_personas.update({"apellido" : apellido})
     return diccionario_personas
 
 #print(crear_un_diccionario_a_partir_de_dos_strings("    leon  " , "      sokolowski       "))
@@ -100,16 +111,34 @@ por ejemplo: "**** **** **** 1234".
 """
 def tomar_numero_de_tarjeta () -> str:
     numero_tarjeta = input("Ingrese el número de su tarjeta: ")
+    while numero_tarjeta.isnumeric() == False:
+        numero_tarjeta = input("ERROR. Debe ser enteramente númerico. Ingeselo devuelta: ")
+    
+    print(f"**** **** **** {numero_tarjeta[12:]}")
+
+#tomar_numero_de_tarjeta()
 
 """
 13. Escribir una función que tome un correo electrónico y elimine cualquier carácter después del símbolo @, 
 por ejemplo: "usuario@gmail.com" -> "usuario".
 """
+def obtener_solo_el_usuario_de_un_email (email : str) -> str:
+    i = email.index("@")
+    email = email[:i]
+    return email
+
+#print(obtener_solo_el_usuario_de_un_email("Kokorito525@gmail.com"))
 
 """
 14. Escribir una función que tome una URL y devuelva solo el nombre de dominio, por ejemplo: 
 "https://www.ejemplo.com.ar/pagina1" -> "ejemplo"..
 """
+def obtener_solo_el_dominio_de_un_url (url : str) -> str:
+    i = url.index(".com")
+    url = url[12:i]
+    return url
+
+#print(obtener_solo_el_dominio_de_un_url("https://www.ejemplo.com.ar/pagina1"))
 
 """
 15. Escribir una función que tome una cadena de texto y devuelva solo los caracteres alfabéticos, eliminando
