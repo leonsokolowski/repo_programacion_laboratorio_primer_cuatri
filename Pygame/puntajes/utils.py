@@ -7,6 +7,6 @@ def formatear_nombre_jugador(nombre: str) -> str:
     
     nombre = nombre.strip()
     
-    nombre = nombre[0:" "]
+    nombre = nombre.split()[0]
     
     return nombre
