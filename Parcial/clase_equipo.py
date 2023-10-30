@@ -38,7 +38,9 @@ class Equipo():
         cantidad_de_jugadores = len(self.lista_de_jugadores)
         jugador_seleccionado = input(f"Seleccione un jugador por su índice (1 - {cantidad_de_jugadores}): ")
         
-        if re.match("[0-9]|[0-9]{2}", jugador_seleccionado):
+        while re.match("[1-9]+", jugador_seleccionado) == None:
+            jugador_seleccionado = input(f"No existe ese jugador_seleccionado. Seleccione un jugador por su índice (1 - {cantidad_de_jugadores}): ")
+        if re.match("[1-9]+", jugador_seleccionado):
             jugador_seleccionado = int(jugador_seleccionado) - 1
             if jugador_seleccionado <= cantidad_de_jugadores:
                 estadisticas_jugador = self.lista_de_jugadores[jugador_seleccionado].obtener_estadisticas_completas()
@@ -52,14 +54,10 @@ class Equipo():
                     pregunta_csv = input("Tiene que responder Si o No: ").lower()
                 if pregunta_csv == "si":
                     self.crear_csv(jugador_seleccionado)
+                    print("Información enviada exitosamente")
                 elif pregunta_csv == "no":
                     print("No se realizará la conversión a csv")
                 
-                            
-            elif jugador_seleccionado <= 0:
-                print("No existe ese jugador_seleccionado")
-            else:
-                print("No existe ese jugador_seleccionado")
     
     #3
     def crear_csv(self, indice):
@@ -82,7 +80,6 @@ class Equipo():
                 else:
                     archivo.write("\n")
                     archivo.write(nueva_linea_csv)
-                    print("Información enviada exitosamente")
         else:
             with open(ruta_de_csv, 'w', encoding= "utf-8") as file:
                 claves =[
@@ -110,20 +107,18 @@ class Equipo():
     def seleccionar_jugador_y_mostrar_sus_logros (self):
         patron = "[a-zA-Z ]+$"
         jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
-        while re.match("[a-zA-Z ]+$", jugador_seleccionado, re.IGNORECASE) == None:
-            jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+
+              
         
-        # for jugador in self.lista_de_jugadores:
-        #     if re.match(player_name, jugador.nombre, re.IGNORECASE):
-        #         print(f"Logros de {jugador.nombre}:")
-        #         for logro in jugador.logros:
-        #             print(logro)
+        
     
             
         
 if __name__ == "__main__":             
     dream_team = Equipo(ruta_de_archivo)
-    #dream_team.mostrar_todos_los_jugadores_y_su_posicion()
-    dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas()
+    #dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
+    #dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
+    dream_team.seleccionar_jugador_y_mostrar_sus_logros()
+    
 
 

@@ -11,11 +11,11 @@ textos = [
 patron_de_busqueda = "^[a-zA-Z ]+\|\|[a-zA-Z ]+#[0-9]{2}$"
                     #"^[a-zA-Z ]+\|\|[a-zA-Z ]+#[0-9]+$"
                     #"^[a-zA-Z ]+\|\|[a-zA-Z ]+#[0-9]{1,2}$"
-"""
+
 for texto in textos:
     if re.match(patron_de_busqueda, texto):
         print(texto)
-"""      
+    
 # nombre = ""
 # while not re.match(patron_de_busqueda, nombre):
 #     nombre = input("Escriba su nombre: ")
@@ -48,7 +48,13 @@ texto = "uno 1 dos 2 tres 3 cuatro"
 patron = " [0-9]{1} "
 print(re.split(patron, texto))
 """
+"""
 texto = "uno 1 dos 2 tres 3 cuatro # cinco ! seis"
 #patron = " [0-9]{1} | [^\d] "
 patron = " [^a-z]{1} "
 print(re.split(patron, texto))
+"""
+# jdsajd
+# daskjldhsakldhlsa
+# dklsajdklsaj
+# dhdas+da
