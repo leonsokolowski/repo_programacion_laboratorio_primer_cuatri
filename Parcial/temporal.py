@@ -1,31 +1,19 @@
-"""
-import json
-ruta_de_acceso = "Parcial/dream_team.json"
-with open(ruta_de_acceso, "r", encoding= "utf-8") as miarchivo:
-    objeto = json.load(miarchivo)
-    print(objeto)
+def imprimir_menu ():
+    """
+    Imprime un menu.
+    Recibe: nada.
+    Devuelve: nada.
+    """
+    menu = \
+    """
+    1. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe.
+    2. Recorrer la lista imprimiendo por consola nombre de cada superhéroe junto a la altura del mismo .
+    3. Recorrer la lista y determinar cuál es el superhéroe más alto (MÁXIMO).
+    4. Recorrer la lista y determinar cuál es el superhéroe más bajo (MÍNIMO).
+    5. Recorrer la lista y determinar la altura promedio de los  superhéroes (PROMEDIO).
+    6. Informar cual es la identidad del superhéroe asociado a cada uno de los indicadores anteriores (MÁXIMO, MÍNIMO).
+    7. Calcular e informar cual es el superhéroe más y menos pesado.
+    8. Salir.
+    """
+    print(menu)
     
-    
-def importar_json (archivo):
-        with open(archivo, "r", encoding= "utf-8") as jugadores_dream_team:
-            objeto = json.load(jugadores_dream_team)
-            return objeto
-
-print(importar_json(ruta_de_acceso))
-"""
-
-# class Persona():
-#     def __init__ (self, nombre, apellido, edad, dni):
-#         self.nombre = nombre
-#         self.apellido = apellido
-#         self.edad = edad
-#         self.dni = dni
-    
-#     def presentarse (self):
-#         print(f"Hola me llamo {self.nombre} {self.apellido}")
-
-# chechu = Persona("Cecilia", "Woitasen", 26, 40073938)
-
-# class Alumno(Persona):
-#     pass
-
