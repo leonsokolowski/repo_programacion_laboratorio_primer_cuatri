@@ -104,9 +104,54 @@ class Equipo():
             
                 file.write(nueva_linea_csv)
     #4
+    def preguntar_si_quiere_volver_a_ingresar_dato (self, booleano):
+        if booleano:
+            respuesta = input("El nombre de jugador no existe o está mal escrito. ¿Desea volver a escribirlo? (Si|No): ").lower()
+            while respuesta != "si" and respuesta != "no":
+                respuesta = input("Tiene que responder Si o No: ").lower()
+            if respuesta == "no":
+                booleano = False
+        
+        return booleano
+        
     def seleccionar_jugador_y_mostrar_sus_logros (self):
         patron = "[a-zA-Z ]+$"
-        jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+        bandera = True
+        while bandera:
+
+            jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+            while re.match(patron, jugador_seleccionado, re.IGNORECASE) == None:
+                jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+
+            for jugador in self.lista_de_jugadores:
+                if re.match(jugador_seleccionado, jugador.obtener_nombre_jugador, re.IGNORECASE):
+                    bandera = False
+                    print(f"Logros de {jugador.obtener_nombre_jugador}:")
+                    for logro in jugador.obtener_logros_jugador:
+                        print(logro)
+
+            self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
+    
+    #6
+    def seleccionar_jugador_y_mostrar_si_pertence_al_sdlf (self):
+        patron = "[a-zA-Z ]+$"
+        bandera = True
+        while bandera:
+            jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+            while re.match(patron, jugador_seleccionado, re.IGNORECASE) == None:
+                jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+
+            for jugador in self.lista_de_jugadores:
+                if re.match(jugador_seleccionado, jugador.obtener_nombre_jugador, re.IGNORECASE):
+                    bandera = False
+                    if "Miembro del Salon de la Fama del Baloncesto" in jugador.obtener_logros_jugador:
+                        print(f"{jugador.obtener_nombre_jugador} es miembro del Salón de la Fama del Baloncesto.")
+                    else:
+                        print(f"{jugador.obtener_nombre_jugador} no es miembro del Salón de la Fama del Baloncesto.")
+        
+        self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
+                    
+                
 
               
         
@@ -118,7 +163,8 @@ if __name__ == "__main__":
     dream_team = Equipo(ruta_de_archivo)
     #dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
     #dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
-    dream_team.seleccionar_jugador_y_mostrar_sus_logros()
+    #dream_team.seleccionar_jugador_y_mostrar_sus_logros()#4
+    dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()
     
 
 
