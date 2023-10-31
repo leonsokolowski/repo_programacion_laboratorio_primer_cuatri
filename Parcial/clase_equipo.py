@@ -13,13 +13,30 @@ class Equipo():
         self.lista_de_jugadores = self.crear_jugadores_y_agregarlos_a_lista()
         
         
-    def importar_json (self):
-        with open(self.archivo, "r", encoding= "utf-8") as jugadores_dream_team:
-            diccionario_equipo = json.load(jugadores_dream_team)
-        return diccionario_equipo
+    def importar_json (self) -> dict:
+        """
+        Importa el archivo JSON.
+        Recibe: self.
+        Devuelve: un diccionario
+        """
+        try:
+            with open(self.archivo, "r", encoding= "utf-8") as jugadores_dream_team:
+                diccionario_equipo = json.load(jugadores_dream_team)
+            return diccionario_equipo
+        except FileNotFoundError:
+            print("Error, archivo no encontrado")
+            return None
+        except json.JSONDecodeError:
+            print("Error al decodificar el JSON")
+            return None
             
     
-    def crear_jugadores_y_agregarlos_a_lista (self):
+    def crear_jugadores_y_agregarlos_a_lista (self) -> list:
+        """
+        Crea a cada objeto de la clase Jugador y lo agrega a una lista.
+        Recibe: self.
+        Devuelve: una lista de objetos.
+        """
         lista_de_jugadores = []
         data_jugadores = self.importar_json().get("jugadores")
         for jugador in data_jugadores:
@@ -28,6 +45,12 @@ class Equipo():
     
     #1
     def mostrar_todos_los_jugadores_y_su_posicion (self):
+        """
+        Recorre la lista de jugadores, mediante metodos de la clase jugador obtiene el nombre y la posición de cada jugador. 
+        Luego la imprime.
+        Recibe: self.
+        Devuelve: nada.
+        """
         for jugador in self.lista_de_jugadores:
             nombre = jugador.obtener_nombre_jugador
             posicion = jugador.obtener_posicion_jugador
@@ -35,6 +58,12 @@ class Equipo():
     
     #2
     def seleccionar_jugador_y_mostrar_sus_estadisticas (self):
+        """
+        Pregunta por un numero y valida que lo sea. Valida que ese numero coincida con el indice de algun jugador de la lista.
+        Si es asi imprime sus estadisticas. Luego pregunta si quiere importarlas a un archivo CSV.
+        Recibe: self.
+        Devuelve: nada.
+        """
         cantidad_de_jugadores = len(self.lista_de_jugadores)
         jugador_seleccionado = input(f"Seleccione un jugador por su índice (1 - {cantidad_de_jugadores}): ")
         
@@ -42,25 +71,35 @@ class Equipo():
             jugador_seleccionado = input(f"No existe ese jugador_seleccionado. Seleccione un jugador por su índice (1 - {cantidad_de_jugadores}): ")
         if re.match("[1-9]+", jugador_seleccionado):
             jugador_seleccionado = int(jugador_seleccionado) - 1
-            if jugador_seleccionado <= cantidad_de_jugadores:
-                estadisticas_jugador = self.lista_de_jugadores[jugador_seleccionado].obtener_estadisticas_completas()
-                print(self.lista_de_jugadores[jugador_seleccionado].obtener_nombre_jugador)
-                for clave, valor in estadisticas_jugador.items():
-                    print(f"{clave.capitalize()} : {valor}")
-                
-                #3
-                pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
-                while pregunta_csv != "si" and pregunta_csv != "no":
-                    pregunta_csv = input("Tiene que responder Si o No: ").lower()
-                if pregunta_csv == "si":
-                    self.crear_csv(jugador_seleccionado)
-                    print("Información enviada exitosamente")
-                elif pregunta_csv == "no":
-                    print("No se realizará la conversión a csv")
-                
+            try:
+                if jugador_seleccionado <= cantidad_de_jugadores:
+                    estadisticas_jugador = self.lista_de_jugadores[jugador_seleccionado].obtener_estadisticas_completas()
+                    print(self.lista_de_jugadores[jugador_seleccionado].obtener_nombre_jugador)
+                    for clave, valor in estadisticas_jugador.items():
+                        print(f"{clave.capitalize()} : {valor}")
+                    
+                    #3
+                    pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
+                    while pregunta_csv != "si" and pregunta_csv != "no":
+                        pregunta_csv = input("Tiene que responder Si o No: ").lower()
+                    if pregunta_csv == "si":
+                        self.crear_csv(jugador_seleccionado)
+                        print("Información enviada exitosamente")
+                    elif pregunta_csv == "no":
+                        print("No se realizará la conversión a csv")
+            except IndexError:
+                print("Indice no encontrado")
     
     #3
-    def crear_csv(self, indice):
+    def crear_csv(self, indice: int):
+        """
+        Consigue todos los datos que va a importar al CSV.
+        Si el archivo CSV existe, lo lee linea por linea.
+        En caso de que la linea que se quiere importar ya exista, no se importa, si no existe, la crea.
+        Si el archivo CSV no existe, lo crea, crea una primera linea con los nombres de los datos que luego agregara.
+        Recibe: self y un dato int.
+        Devuelve: nada.
+        """
         nombre = self.lista_de_jugadores[indice].obtener_nombre_jugador
         posicion = self.lista_de_jugadores[indice].obtener_posicion_jugador
         estadisticas = self.lista_de_jugadores[indice].obtener_estadisticas_completas()
@@ -104,7 +143,14 @@ class Equipo():
             
                 file.write(nueva_linea_csv)
     #4
-    def preguntar_si_quiere_volver_a_ingresar_dato (self, booleano):
+    def preguntar_si_quiere_volver_a_ingresar_dato (self, booleano : bool) -> bool:
+        """
+        Si el booleano vale True, pregunta si desea volver a escribir el nombre del jugador.
+        Si la respuesta es si, no cambia el valor del booleano para que el programa se ejecute devuelta.
+        Si la respuesta es no, cambia el valor del booleano para que el programa termine.
+        Recibe: self y un dato bool.
+        Devuelve: un dato bool.
+        """
         if booleano:
             respuesta = input("El nombre de jugador no existe o está mal escrito. ¿Desea volver a escribirlo? (Si|No): ").lower()
             while respuesta != "si" and respuesta != "no":
@@ -115,13 +161,19 @@ class Equipo():
         return booleano
         
     def seleccionar_jugador_y_mostrar_sus_logros (self):
+        """
+        Pide el nombre de un jugador y lo valida. 
+        Si el nombre ingresado corresponde con el nombre de alguno de los jugadores de la lista, muestra sus logros.
+        Recibe: self.
+        Devuelve: nada.
+        """
         patron = "[a-zA-Z ]+$"
         bandera = True
         while bandera:
 
             jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
             while re.match(patron, jugador_seleccionado, re.IGNORECASE) == None:
-                jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+                jugador_seleccionado = input("El nombre debe estar compuesto por letras. Ingreselo devuelta: ")
 
             for jugador in self.lista_de_jugadores:
                 if re.match(jugador_seleccionado, jugador.obtener_nombre_jugador, re.IGNORECASE):
@@ -134,32 +186,71 @@ class Equipo():
     
     #5
     def promedio_de_puntos_por_partido_del_equipo (self):
+        """
+        Para cada jugador de la lista obtiene su promedio de puntos por partido para realizar un promedio todos. Luego los añade a una lista.
+        Ordena la lista de mayor a menor mediante un quicksort. Luego verifica que jugador coincide con la lista ordena y muestra su nombre.
+        Recibe: self.
+        Devuelve: nada.
+        """
         cantidad_de_jugadores = len(self.lista_de_jugadores)
         suma_de_promedios_de_jugadores = 0
+        lista_de_promedios = []
         for jugador in self.lista_de_jugadores:
             estadisticas = jugador.obtener_estadisticas_jugador
             suma_de_promedios_de_jugadores += estadisticas.obtener_promedio_puntos_x_partido
+            lista_de_promedios.append(estadisticas.obtener_promedio_puntos_x_partido)
         
         try:
             promedio_puntos_por_partido_equipo = suma_de_promedios_de_jugadores / cantidad_de_jugadores
         except ZeroDivisionError:
             print("No se puede encontrar el promedio de puntos del equipo si no existen jugadores dentro de el")
+        else:
+            promedio_puntos_por_partido_equipo = str(promedio_puntos_por_partido_equipo) 
+            print(f"El promedio de promedios de puntos por partido de todo el equipo es de: {promedio_puntos_por_partido_equipo[:4]}")
+        lista_promedios_ordenada = self.quick_sort(lista_de_promedios)
+             
+        for i in range (cantidad_de_jugadores):
+            for jugador in self.lista_de_jugadores:
+                if jugador.obtener_estadisticas_jugador.obtener_promedio_puntos_x_partido == lista_promedios_ordenada[i]:
+                    print(f"{jugador.obtener_nombre_jugador} - {lista_promedios_ordenada[i]}")
         
-        print(promedio_puntos_por_partido_equipo)
-    
-    #def quick_sort(self)                                                           
+        
+    def quick_sort (self, lista : list[float]):
+        """
+        Ordena los números de mayor a menor.
+        Recibe: self y una lista de datos flotantes.
+        Devuelve: devuelve la función aplicada a listas cada vez más chicas hasta que este ordenada.
+        """
+        if len(lista) < 2:
+            return lista
+        else:
+            lista_a_ordenar = lista.copy()
+            pivot = lista_a_ordenar.pop(0)
+            numeros_mas_grandes = []
+            numeros_mas_chicos = []
+            
+            for numero in lista_a_ordenar:
+                if numero > pivot:
+                    numeros_mas_grandes.append(numero)
+                elif numero <= pivot:
+                    numeros_mas_chicos.append(numero)
+            
+        return self.quick_sort(numeros_mas_grandes) + [pivot] + self.quick_sort(numeros_mas_chicos)                                                           
                 
-        
-
-    
     #6
     def seleccionar_jugador_y_mostrar_si_pertence_al_sdlf (self):
+        """
+        Pide el nombre de un jugador y lo valida. 
+        Si el nombre ingresado corresponde con el nombre de alguno de los jugadores de la lista, valida si es miembro o no del Salon de la Fama.
+        Recibe: self.
+        Devuelve: nada.
+        """
         patron = "[a-zA-Z ]+$"
         bandera = True
         while bandera:
             jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
             while re.match(patron, jugador_seleccionado, re.IGNORECASE) == None:
-                jugador_seleccionado = input("Ingrese el nombre del jugador que desea elegir: ")
+                jugador_seleccionado = input("El nombre debe estar compuesto por letras. Ingreselo devuelta: ")
 
             for jugador in self.lista_de_jugadores:
                 if re.match(jugador_seleccionado, jugador.obtener_nombre_jugador, re.IGNORECASE):
@@ -171,7 +262,21 @@ class Equipo():
         
         bandera = self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
                     
-                
+    #7
+    def calcular_y_mostrar_jugador_con_mas_rebotes (self):
+        """
+        Calcula el mayor numero de rebotes y el jugador que lo posee. Luego lo imprime
+        Recibe: self.
+        Devuelve: nada.
+        """
+        mayor_numero_rebotes = None
+        for jugador in self.lista_de_jugadores:
+            if mayor_numero_rebotes == None or mayor_numero_rebotes < jugador.obtener_estadisticas_jugador.obtener_rebotes_totales:
+                jugador_con_mas_rebotes = jugador.obtener_nombre_jugador
+                mayor_numero_rebotes = jugador.obtener_estadisticas_jugador.obtener_rebotes_totales
+        
+        print (f"El jugador con más rebotes totales del dream team es: {jugador_con_mas_rebotes} con {mayor_numero_rebotes}")
+                    
 
               
         
@@ -181,11 +286,12 @@ class Equipo():
         
 if __name__ == "__main__":             
     dream_team = Equipo(ruta_de_archivo)
-    #dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
-    #dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
-    #dream_team.seleccionar_jugador_y_mostrar_sus_logros()#4
-    dream_team.promedio_de_puntos_por_partido_del_equipo()
-    #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
+    dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
+    dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
+    dream_team.seleccionar_jugador_y_mostrar_sus_logros()#4
+    dream_team.promedio_de_puntos_por_partido_del_equipo()#5
+    dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
+    dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
     
 
 
