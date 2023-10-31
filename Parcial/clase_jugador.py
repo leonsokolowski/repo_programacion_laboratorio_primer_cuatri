@@ -28,5 +28,7 @@ class Jugador():
         for i in range (cantidad_de_estadisticas):
             estadisticas_completas.update({self.obtener_estadisticas_jugador.obtener_claves_de_estadisticas[i] : self.obtener_estadisticas_jugador.obtener_valores_de_estadisticas[i]}) 
         return estadisticas_completas
+    
+        
                
     

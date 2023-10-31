@@ -47,6 +47,9 @@
 #         else:
 #             print("No existe ese indice")
 
+numero = 0
 
-
+for i in range (10):
+    numero += 1
+    print(numero)
 

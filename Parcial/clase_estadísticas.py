@@ -24,8 +24,8 @@ class Estadisticas():
         return self.puntos_totales
     
     @property
-    def obtener_puntos_x_partido (self):
-        return self.obtener_puntos_x_partido
+    def obtener_promedio_puntos_x_partido (self):
+        return self.promedio_puntos_x_partido
     
     @property
     def obtener_rebotes_totales (self):

@@ -130,7 +130,27 @@ class Equipo():
                     for logro in jugador.obtener_logros_jugador:
                         print(logro)
 
-            self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
+            bandera = self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
+    
+    #5
+    def promedio_de_puntos_por_partido_del_equipo (self):
+        cantidad_de_jugadores = len(self.lista_de_jugadores)
+        suma_de_promedios_de_jugadores = 0
+        for jugador in self.lista_de_jugadores:
+            estadisticas = jugador.obtener_estadisticas_jugador
+            suma_de_promedios_de_jugadores += estadisticas.obtener_promedio_puntos_x_partido
+        
+        try:
+            promedio_puntos_por_partido_equipo = suma_de_promedios_de_jugadores / cantidad_de_jugadores
+        except ZeroDivisionError:
+            print("No se puede encontrar el promedio de puntos del equipo si no existen jugadores dentro de el")
+        
+        print(promedio_puntos_por_partido_equipo)
+    
+    #def quick_sort(self)                                                           
+                
+        
+
     
     #6
     def seleccionar_jugador_y_mostrar_si_pertence_al_sdlf (self):
@@ -149,7 +169,7 @@ class Equipo():
                     else:
                         print(f"{jugador.obtener_nombre_jugador} no es miembro del Salón de la Fama del Baloncesto.")
         
-        self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
+        bandera = self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
                     
                 
 
@@ -164,7 +184,8 @@ if __name__ == "__main__":
     #dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
     #dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
     #dream_team.seleccionar_jugador_y_mostrar_sus_logros()#4
-    dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()
+    dream_team.promedio_de_puntos_por_partido_del_equipo()
+    #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
     
 
 
