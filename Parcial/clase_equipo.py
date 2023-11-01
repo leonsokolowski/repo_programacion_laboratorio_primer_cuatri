@@ -1,5 +1,6 @@
 import json
 import re
+import sqlite3
 from clase_jugador import Jugador
 
 ruta_de_archivo = r"Parcial\dream_team.json"
@@ -228,7 +229,7 @@ class Equipo():
                 print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['promedio_puntos_por_partido']}")
         
         
-    def quick_sort (self, lista : list[Jugador], ascendente : bool, clave) -> function:
+    def quick_sort (self, lista : list[Jugador], ascendente : bool, clave):
         """
         Ordena los datos de menor a mayor o de mayor a menor dependiendo si ascendente es True o False.
         Recibe: self, una lista de objetos Jugador, un booleano y una clave.
@@ -301,7 +302,7 @@ class Equipo():
         """
         Ordena la lista de mayor a menor mediante un quicksort. 
         Luego recorre la lista ordenada mostrando el nombre y las temporadas jugadas de cada jugador.
-        Despues da la opción de crear un archivo CSV y/o un archivo JSON.
+        Crea una base de datos con la lista ordenada y despues da la opción de crear un archivo CSV y/o un archivo JSON.
         Recibe: self.
         Devuelve: nada.
         """
@@ -313,7 +314,38 @@ class Equipo():
             for jugador in lista_temporadas_ordenada:
                 print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['temporadas']}")
                 indice_de_jugador = lista_temporadas_ordenada.index(jugador)
+        
+        #bis
+        with sqlite3.connect("Parcial/bd_jugadores_temporadas.db") as conexion:
+            try:
+                sentencia = """ create table jugadores
+                                (
+                                        id integer primary key autoincrement,
+                                        Nombre text,
+                                        Temporadas text    
+                                )
+                
+                            """
+                conexion.execute(sentencia)
+                print("Se creo la tabla de jugadores")
+            except sqlite3.OperationalError:
+                print("La tabla de jugadores ya existe")
+                sentencia = "delete from jugadores"
+                conexion.execute(sentencia)
+                for jugador in lista_temporadas_ordenada:
+                        conexion.execute("insert into jugadores(Nombre,Temporadas) values (?,?)" , (f"dato borrado {jugador.obtener_nombre_jugador}", jugador.obtener_estadisticas_completas()['temporadas']))
+                        conexion.commit()
+                print("Se borraron los datos anteriores y se agragaron nuevos")
             
+            else:
+                try:
+                    for jugador in lista_temporadas_ordenada:
+                        conexion.execute("insert into jugadores(Nombre,Temporadas) values (?,?)" , (jugador.obtener_nombre_jugador, jugador.obtener_estadisticas_completas()['temporadas']))
+                        conexion.commit()
+                    print("Se agragaron datos")
+                except:
+                    print("error")
+                        
         #B
             pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
             while pregunta_csv != "si" and pregunta_csv != "no":
@@ -340,6 +372,8 @@ class Equipo():
                 self.crear_json(lista_diccionarios_jugador_temporadas)    
             elif pregunta_json == "no":
                 print("No se realizará la conversión a json")
+        
+        
         
     def crear_json (self, lista_de_diccionarios : list[dict]) -> None:
         """
@@ -380,7 +414,7 @@ if __name__ == "__main__":
     #dream_team.promedio_de_puntos_por_partido_del_equipo()#5
     #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
     #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
-    #dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
+    dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
     
 
 
