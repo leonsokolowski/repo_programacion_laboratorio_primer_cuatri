@@ -43,7 +43,7 @@ class Equipo():
         except:
             print("Error con el archivo")
     #1
-    def mostrar_todos_los_jugadores_y_su_posicion (self):
+    def mostrar_todos_los_jugadores_y_su_posicion (self) -> None:
         """
         Recorre la lista de jugadores, mediante metodos de la clase jugador obtiene el nombre y la posición de cada jugador. 
         Luego la imprime.
@@ -56,7 +56,7 @@ class Equipo():
             print(f"{nombre} - {posicion}")
     
     #2
-    def seleccionar_jugador_y_mostrar_sus_estadisticas (self):
+    def seleccionar_jugador_y_mostrar_sus_estadisticas (self) -> None:
         """
         Pregunta por un numero y valida que lo sea. Valida que ese numero coincida con el indice de algun jugador de la lista.
         Si es asi imprime sus estadisticas. Luego pregunta si quiere importarlas a un archivo CSV.
@@ -90,7 +90,7 @@ class Equipo():
                 print("Indice no encontrado")
     
     #3
-    def crear_csv(self, lista, indice: int, ejercicio_3 : bool):
+    def crear_csv(self, lista, indice: int, ejercicio_3 : bool) -> None:
         """
         Consigue todos los datos que va a importar al CSV, dependiendo del ejercicio que quiera. 
         Si el archivo CSV existe, lo lee linea por linea.
@@ -176,7 +176,7 @@ class Equipo():
         
         return booleano
         
-    def seleccionar_jugador_y_mostrar_sus_logros (self):
+    def seleccionar_jugador_y_mostrar_sus_logros (self) -> None:
         """
         Pide el nombre de un jugador y lo valida. 
         Si el nombre ingresado corresponde con el nombre de alguno de los jugadores de la lista, muestra sus logros.
@@ -201,10 +201,11 @@ class Equipo():
             bandera = self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
     
     #5
-    def promedio_de_puntos_por_partido_del_equipo (self):
+    def promedio_de_puntos_por_partido_del_equipo (self) -> None:
         """
-        Para cada jugador de la lista obtiene su promedio de puntos por partido para realizar un promedio todos. Luego los añade a una lista.
-        Ordena la lista de mayor a menor mediante un quicksort. Luego verifica que jugador coincide con la lista ordena y muestra su nombre.
+        Para cada jugador de la lista obtiene su promedio de puntos por partido para realizar un promedio todos.
+        Ordena la lista de menor a mayor mediante un quicksort. 
+        Luego recorre la lista ordenada mostrando el nombre y el promedio de puntos por partidos de cada jugador.
         Recibe: self.
         Devuelve: nada.
         """
@@ -227,9 +228,9 @@ class Equipo():
                 print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['promedio_puntos_por_partido']}")
         
         
-    def quick_sort (self, lista : list[Jugador], ascendente : bool, clave):
+    def quick_sort (self, lista : list[Jugador], ascendente : bool, clave) -> function:
         """
-        Ordena los números de menor a mayor o de mayor a menor dependiendo si ascendente es True o False.
+        Ordena los datos de menor a mayor o de mayor a menor dependiendo si ascendente es True o False.
         Recibe: self, una lista de objetos Jugador, un booleano y una clave.
         Devuelve: devuelve la función aplicada a listas cada vez más chicas hasta que este ordenada.
         """
@@ -255,7 +256,7 @@ class Equipo():
             return self.quick_sort(numeros_mas_grandes, ascendente, clave) + [pivot] + self.quick_sort(numeros_mas_chicos, ascendente, clave)                                                           
                 
     #6
-    def seleccionar_jugador_y_mostrar_si_pertence_al_sdlf (self):
+    def seleccionar_jugador_y_mostrar_si_pertence_al_sdlf (self) -> None:
         """
         Pide el nombre de un jugador y lo valida. 
         Si el nombre ingresado corresponde con el nombre de alguno de los jugadores de la lista, valida si es miembro o no del Salon de la Fama.
@@ -280,7 +281,7 @@ class Equipo():
         bandera = self.preguntar_si_quiere_volver_a_ingresar_dato(bandera)
                     
     #7
-    def calcular_y_mostrar_jugador_con_mas_rebotes (self):
+    def calcular_y_mostrar_jugador_con_mas_rebotes (self) -> None:
         """
         Calcula el mayor numero de rebotes y el jugador que lo posee. Luego lo imprime
         Recibe: self.
@@ -296,10 +297,11 @@ class Equipo():
     
     #8
     #A
-    def listar_jugadores_ordenados_por_la_cantidad_de_temporadas (self):
+    def listar_jugadores_ordenados_por_la_cantidad_de_temporadas (self) -> None:
         """
-        Para cada jugador de la lista obtiene su promedio de puntos por partido para realizar un promedio todos. Luego los añade a una lista.
-        Ordena la lista de mayor a menor mediante un quicksort. Luego verifica que jugador coincide con la lista ordena y muestra su nombre.
+        Ordena la lista de mayor a menor mediante un quicksort. 
+        Luego recorre la lista ordenada mostrando el nombre y las temporadas jugadas de cada jugador.
+        Despues da la opción de crear un archivo CSV y/o un archivo JSON.
         Recibe: self.
         Devuelve: nada.
         """
@@ -340,6 +342,11 @@ class Equipo():
                 print("No se realizará la conversión a json")
         
     def crear_json (self, lista_de_diccionarios : list[dict]) -> None:
+        """
+        Pregunta un nombre y lo valida para darselo a un archivo Json que creará posteriormente.
+        Recibe: self y una lista de diccionarios.
+        Devuelve: nada.
+        """
         nombre_de_archivo = input("Ingrese el nombre que desea que tenga el archivo: ")
         while re.match("[a-zA-Z0-9_ ]+$", nombre_de_archivo) == None:
             print("Caracteres invalidos en el nombre. Caracteres válidos: minúsculas, mayusculas, números y guiones bajos.")

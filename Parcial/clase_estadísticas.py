@@ -16,98 +16,98 @@ class Estadisticas():
         self.__valores_de_estadisticas = list(diccionario_estadisticas.values())
     
     @property
-    def obtener_temporadas (self):
+    def obtener_temporadas (self) -> int:
         """
         Devuelve: el valor del atributo.
         """
         return self.__temporadas
     
     @property
-    def obtener_puntos_totales (self):
+    def obtener_puntos_totales (self) -> int:
         """
         Devuelve: el valor del atributo.
         """
         return self.__puntos_totales
     
     @property
-    def obtener_promedio_puntos_x_partido (self):
+    def obtener_promedio_puntos_x_partido (self) -> float:
         """
         Devuelve: el valor del atributo.
         """
         return self.__promedio_puntos_x_partido
     
     @property
-    def obtener_rebotes_totales (self):
+    def obtener_rebotes_totales (self) -> int:
         """
         Devuelve: el valor del atributo.
         """
         return self.__rebotes_totales
     
     @property
-    def obtener_promedio_rebotes_x_partido (self):
+    def obtener_promedio_rebotes_x_partido (self) -> float:
         """
         Devuelve: el valor del atributo.
         """
         return self.__promedio_rebotes_x_partido
     
     @property
-    def obtener_asistencias_totales (self):
+    def obtener_asistencias_totales (self) -> int:
         """
         Devuelve: el valor del atributo.
         """
         return self.__asistencias_totales
     
     @property
-    def obtener_promedio_asistencias_x_partido (self):
+    def obtener_promedio_asistencias_x_partido (self) -> float:
         """
         Devuelve: el valor del atributo.
         """
         return self.__promedio_asistencias_x_partido
     
     @property
-    def obtener_robos_totales (self):
+    def obtener_robos_totales (self) -> int:
         """
         Devuelve: el valor del atributo.
         """
         return self.__robos_totales
     
     @property
-    def obtener_bloqueos_totales (self):
+    def obtener_bloqueos_totales (self) -> int:
         """
         Devuelve: el valor del atributo.
         """
         return self.__bloqueos_totales
     
     @property
-    def obtener_porcentaje_tiros_de_2 (self):
+    def obtener_porcentaje_tiros_de_2 (self) -> float:
         """
         Devuelve: el valor del atributo.
         """
         return self.__porcentaje_tiros_de_2
     
     @property
-    def obtener_porcentaje_libres (self):
+    def obtener_porcentaje_libres (self) -> float:
         """
         Devuelve: el valor del atributo.
         """
         return self.__porcentaje_libres
     
     @property
-    def obtener_porcentaje_triples (self):
+    def obtener_porcentaje_triples (self) -> float:
         """
         Devuelve: el valor del atributo.
         """
         return self.__porcentaje_triples
     
     @property
-    def obtener_claves_de_estadisticas(self):
+    def obtener_claves_de_estadisticas(self) -> str:
         """
         Devuelve: el valor del atributo.
         """
         return self.__claves_de_estadisticas
     
     @property
-    def obtener_valores_de_estadisticas(self):
+    def obtener_valores_de_estadisticas(self) -> str:
         """
         Devuelve: el valor del atributo.
         """

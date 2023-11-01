@@ -7,28 +7,28 @@ class Jugador():
         self.__estadisticas_jugador = Estadisticas(diccionario_jugador.get("estadisticas"))
         self.estadisticas_completas = self.obtener_estadisticas_completas()
     @property
-    def obtener_nombre_jugador (self):
+    def obtener_nombre_jugador (self) -> str:
         """
         Devuelve: el valor del atributo.
         """
         return self.__nombre_jugador
     
     @property
-    def obtener_posicion_jugador (self):
+    def obtener_posicion_jugador (self) -> str:
         """
         Devuelve: el valor del atributo.
         """
         return self.__posicion_jugador
     
     @property
-    def obtener_estadisticas_jugador (self):
+    def obtener_estadisticas_jugador (self) -> object:
         """
         Devuelve: el valor del atributo.
         """
         return self.__estadisticas_jugador
     
     @property
-    def obtener_logros_jugador (self):
+    def obtener_logros_jugador (self) -> list[str]:
         """
         Devuelve: el valor del atributo.
         """
