@@ -5,7 +5,7 @@ import os
 from clase_jugador import Jugador
 
 ruta_de_archivo = r"Parcial/dream_team.json"
-ruta_de_csv = r"Parcial\basquetbolistas.csv"
+ruta_de_csv = r"Parcial\estadisticas_basquetbolistas.csv"
  
 class Equipo():
     def __init__(self, archivo):
@@ -83,7 +83,7 @@ class Equipo():
                     while pregunta_csv != "si" and pregunta_csv != "no":
                         pregunta_csv = input("Tiene que responder Si o No: ").lower()
                     if pregunta_csv == "si":
-                        self.crear_csv(jugador_seleccionado)
+                        self.crear_csv(self.lista_de_jugadores, jugador_seleccionado, True)
                         print("Información enviada exitosamente")
                     elif pregunta_csv == "no":
                         print("No se realizará la conversión a csv")
@@ -91,25 +91,38 @@ class Equipo():
                 print("Indice no encontrado")
     
     #3
-    def crear_csv(self, indice: int):
+    def crear_csv(self, lista, indice: int, ejercicio_3 : bool):
         """
-        Consigue todos los datos que va a importar al CSV.
+        Consigue todos los datos que va a importar al CSV, dependiendo del ejercicio que quiera. 
         Si el archivo CSV existe, lo lee linea por linea.
         En caso de que la linea que se quiere importar ya exista, no se importa, si no existe, la crea.
         Si el archivo CSV no existe, lo crea, crea una primera linea con los nombres de los datos que luego agregara.
-        Recibe: self y un dato int.
+        Recibe: self, un dato int y un dato bool.
         Devuelve: nada.
         """
-        nombre = self.lista_de_jugadores[indice].obtener_nombre_jugador
-        posicion = self.lista_de_jugadores[indice].obtener_posicion_jugador
-        estadisticas = self.lista_de_jugadores[indice].obtener_estadisticas_completas()
+        
         lista_datos = []
-        lista_datos.append(nombre)
-        lista_datos.append(posicion)
-        for v in estadisticas.values():
-            lista_datos.append(v)
-        if os.path.isfile(ruta_de_csv):
-            with open(ruta_de_csv, 'r+', newline='') as archivo:
+        ruta = ""
+        if ejercicio_3:
+            ruta = ruta_de_csv
+            nombre = lista[indice].obtener_nombre_jugador
+            lista_datos.append(nombre)
+            posicion = lista[indice].obtener_posicion_jugador
+            lista_datos.append(posicion)
+            estadisticas = lista[indice].obtener_estadisticas_completas()
+            for v in estadisticas.values():
+                lista_datos.append(v)
+        
+        else:
+            ruta = r"Parcial\Sokolowski.csv"
+            nombre = lista[indice].obtener_nombre_jugador
+            lista_datos.append(nombre)
+            temporadas = lista[indice].obtener_estadisticas_completas()['temporadas']
+            lista_datos.append(temporadas)
+            
+
+        if os.path.isfile(ruta):
+            with open(ruta, 'r+', newline='') as archivo:
                 lector_csv = csv.reader(archivo)
                 lineas = list(lector_csv)
                 nueva_linea_csv = ','.join(map(str, lista_datos))
@@ -120,22 +133,28 @@ class Equipo():
                     archivo.write("\n")
                     archivo.write(nueva_linea_csv)
         else:
-            with open(ruta_de_csv, 'w', encoding= "utf-8") as file:
-                claves =[
-                    "Nombre",
-                    "Posicion",
-                    "Temporadas",
-                    "Puntos totales",
-                    "Promedio puntos por partido",
-                    "Rebotes totales",
-                    "Promedio rebotes por partido",
-                    "Asistencias totales",
-                    "Promedio asistencias por partido",
-                    "Robos totales",
-                    "Bloqueos totales",
-                    "Porcentaje tiros de campo",
-                    "Porcentaje tiros libres",
-                    "Porcentaje tiros triples"]
+            with open(ruta, 'w', encoding= "utf-8") as file:
+                if ejercicio_3:
+                    claves =[
+                        "Nombre",
+                        "Posicion",
+                        "Temporadas",
+                        "Puntos totales",
+                        "Promedio puntos por partido",
+                        "Rebotes totales",
+                        "Promedio rebotes por partido",
+                        "Asistencias totales",
+                        "Promedio asistencias por partido",
+                        "Robos totales",
+                        "Bloqueos totales",
+                        "Porcentaje tiros de campo",
+                        "Porcentaje tiros libres",
+                        "Porcentaje tiros triples"]
+                else:
+                    claves =[
+                        "Nombre",
+                        "Temporadas"
+                    ]
                 titulos = ','.join(map(str, claves))
                 file.write(titulos)
                 file.write("\n")
@@ -194,11 +213,9 @@ class Equipo():
         """
         cantidad_de_jugadores = len(self.lista_de_jugadores)
         suma_de_promedios_de_jugadores = 0
-        lista_de_promedios = []
         for jugador in self.lista_de_jugadores:
             estadisticas = jugador.obtener_estadisticas_jugador
             suma_de_promedios_de_jugadores += estadisticas.obtener_promedio_puntos_x_partido
-            lista_de_promedios.append(estadisticas.obtener_promedio_puntos_x_partido)
         
         try:
             promedio_puntos_por_partido_equipo = suma_de_promedios_de_jugadores / cantidad_de_jugadores
@@ -207,35 +224,38 @@ class Equipo():
         else:
             promedio_puntos_por_partido_equipo = str(promedio_puntos_por_partido_equipo) 
             print(f"El promedio de promedios de puntos por partido de todo el equipo es de: {promedio_puntos_por_partido_equipo[:4]}")
-        lista_promedios_ordenada = self.quick_sort(lista_de_promedios)
+            lista_promedios_ordenada = self.quick_sort(self.lista_de_jugadores, True, "promedio_puntos_por_partido")
              
-        for i in range (cantidad_de_jugadores):
-            for jugador in self.lista_de_jugadores:
-                if jugador.obtener_estadisticas_jugador.obtener_promedio_puntos_x_partido == lista_promedios_ordenada[i]:
-                    print(f"{jugador.obtener_nombre_jugador} - {lista_promedios_ordenada[i]}")
+            for jugador in lista_promedios_ordenada:
+                print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['promedio_puntos_por_partido']}")
         
         
-    def quick_sort (self, lista : list[float]):
+    def quick_sort (self, lista : list[Jugador], ascendente : bool, clave):
         """
-        Ordena los números de mayor a menor.
-        Recibe: self y una lista de datos flotantes.
+        Ordena los números de menor a mayor o de mayor a menor dependiendo si ascendente es True o False.
+        Recibe: self, una lista de objetos Jugador, un booleano y una clave.
         Devuelve: devuelve la función aplicada a listas cada vez más chicas hasta que este ordenada.
         """
         if len(lista) < 2:
             return lista
         else:
-            lista_a_ordenar = lista.copy()
-            pivot = lista_a_ordenar.pop(0)
+            lista_de_jugadores_a_ordenar = lista.copy()
+            if ascendente:
+                pivot = lista_de_jugadores_a_ordenar.pop()
+            else:
+                pivot = lista_de_jugadores_a_ordenar.pop(0)
             numeros_mas_grandes = []
             numeros_mas_chicos = []
             
-            for numero in lista_a_ordenar:
-                if numero > pivot:
-                    numeros_mas_grandes.append(numero)
-                elif numero <= pivot:
-                    numeros_mas_chicos.append(numero)
-            
-        return self.quick_sort(numeros_mas_grandes) + [pivot] + self.quick_sort(numeros_mas_chicos)                                                           
+            for jugador in lista_de_jugadores_a_ordenar:
+                if jugador.estadisticas_completas.get(clave) > pivot.estadisticas_completas.get(clave):
+                    numeros_mas_grandes.append(jugador)
+                elif jugador.estadisticas_completas.get(clave) <= pivot.estadisticas_completas.get(clave):
+                    numeros_mas_chicos.append(jugador)
+        if ascendente:    
+            return self.quick_sort(numeros_mas_chicos, ascendente, clave) + [pivot] + self.quick_sort(numeros_mas_grandes, ascendente, clave)
+        else:
+            return self.quick_sort(numeros_mas_grandes, ascendente, clave) + [pivot] + self.quick_sort(numeros_mas_chicos, ascendente, clave)                                                           
                 
     #6
     def seleccionar_jugador_y_mostrar_si_pertence_al_sdlf (self):
@@ -276,6 +296,37 @@ class Equipo():
                 mayor_numero_rebotes = jugador.obtener_estadisticas_jugador.obtener_rebotes_totales
         
         print (f"El jugador con más rebotes totales del dream team es: {jugador_con_mas_rebotes} con {mayor_numero_rebotes}")
+    
+    #8
+    #A
+    def listar_jugadores_ordenados_por_la_cantidad_de_temporadas (self):
+        """
+        Para cada jugador de la lista obtiene su promedio de puntos por partido para realizar un promedio todos. Luego los añade a una lista.
+        Ordena la lista de mayor a menor mediante un quicksort. Luego verifica que jugador coincide con la lista ordena y muestra su nombre.
+        Recibe: self.
+        Devuelve: nada.
+        """
+        lista_temporadas_ordenada = self.quick_sort(self.lista_de_jugadores, False, "temporadas")
+        print(lista_temporadas_ordenada)     
+        for jugador in lista_temporadas_ordenada:
+            print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['temporadas']}")
+            indice_de_jugador = lista_temporadas_ordenada.index(jugador)
+            print(indice_de_jugador)
+        
+    #B
+        pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
+        while pregunta_csv != "si" and pregunta_csv != "no":
+            pregunta_csv = input("Tiene que responder Si o No: ").lower()
+        if pregunta_csv == "si":
+            for jugador in lista_temporadas_ordenada:
+                indice_de_jugador = lista_temporadas_ordenada.index(jugador)
+                self.crear_csv(lista_temporadas_ordenada, indice_de_jugador, False)
+            print("Información enviada exitosamente")
+        elif pregunta_csv == "no":
+            print("No se realizará la conversión a csv")
+
+    
+    
                     
 
               
@@ -286,12 +337,13 @@ class Equipo():
         
 if __name__ == "__main__":             
     dream_team = Equipo(ruta_de_archivo)
-    dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
-    dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
-    dream_team.seleccionar_jugador_y_mostrar_sus_logros()#4
-    dream_team.promedio_de_puntos_por_partido_del_equipo()#5
-    dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
-    dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
+    # dream_team.mostrar_todos_los_jugadores_y_su_posicion() #1
+    #dream_team.seleccionar_jugador_y_mostrar_sus_estadisticas() #2 y 3
+    #dream_team.seleccionar_jugador_y_mostrar_sus_logros()#4
+    #dream_team.promedio_de_puntos_por_partido_del_equipo()#5
+    #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
+    #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
+    dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
     
 
 
