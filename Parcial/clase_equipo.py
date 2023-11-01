@@ -1,10 +1,8 @@
 import json
 import re
-import csv
-import os
 from clase_jugador import Jugador
 
-ruta_de_archivo = r"Parcial/dream_team.json"
+ruta_de_archivo = r"Parcial\dream_team.json"
 ruta_de_csv = r"Parcial\estadisticas_basquetbolistas.csv"
  
 class Equipo():
@@ -25,10 +23,9 @@ class Equipo():
             return diccionario_equipo
         except FileNotFoundError:
             print("Error, archivo no encontrado")
-            return None
         except json.JSONDecodeError:
             print("Error al decodificar el JSON")
-            return None
+
             
     
     def crear_jugadores_y_agregarlos_a_lista (self) -> list:
@@ -38,11 +35,13 @@ class Equipo():
         Devuelve: una lista de objetos.
         """
         lista_de_jugadores = []
-        data_jugadores = self.importar_json().get("jugadores")
-        for jugador in data_jugadores:
-            lista_de_jugadores.append(Jugador(jugador))
-        return lista_de_jugadores
-    
+        try:
+            data_jugadores = self.importar_json().get("jugadores")
+            for jugador in data_jugadores:
+                lista_de_jugadores.append(Jugador(jugador))
+            return lista_de_jugadores
+        except:
+            print("Error con el archivo")
     #1
     def mostrar_todos_los_jugadores_y_su_posicion (self):
         """
@@ -121,18 +120,16 @@ class Equipo():
             lista_datos.append(temporadas)
             
 
-        if os.path.isfile(ruta):
-            with open(ruta, 'r+', newline='') as archivo:
-                lector_csv = csv.reader(archivo)
-                lineas = list(lector_csv)
-                nueva_linea_csv = ','.join(map(str, lista_datos))
+        try:
+            nueva_linea_csv = ','.join(map(str, lista_datos))
+            with open(ruta, 'r+') as archivo:
+                lineas = archivo.readlines()
 
-                if nueva_linea_csv in [','.join(map(str, linea)) for linea in lineas]:
+                if nueva_linea_csv + "\n" in lineas:
                     print("La línea ya existe en el archivo CSV. No se ha añadido.")
                 else:
-                    archivo.write("\n")
-                    archivo.write(nueva_linea_csv)
-        else:
+                    archivo.write(nueva_linea_csv + "\n")
+        except FileNotFoundError:
             with open(ruta, 'w', encoding= "utf-8") as file:
                 if ejercicio_3:
                     claves =[
@@ -160,7 +157,7 @@ class Equipo():
                 file.write("\n")
                 nueva_linea_csv = ','.join(map(str, lista_datos))
             
-                file.write(nueva_linea_csv)
+                file.write(nueva_linea_csv + "\n")
     #4
     def preguntar_si_quiere_volver_a_ingresar_dato (self, booleano : bool) -> bool:
         """
@@ -306,25 +303,58 @@ class Equipo():
         Recibe: self.
         Devuelve: nada.
         """
-        lista_temporadas_ordenada = self.quick_sort(self.lista_de_jugadores, False, "temporadas")
-        print(lista_temporadas_ordenada)     
-        for jugador in lista_temporadas_ordenada:
-            print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['temporadas']}")
-            indice_de_jugador = lista_temporadas_ordenada.index(jugador)
-            print(indice_de_jugador)
-        
-    #B
-        pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
-        while pregunta_csv != "si" and pregunta_csv != "no":
-            pregunta_csv = input("Tiene que responder Si o No: ").lower()
-        if pregunta_csv == "si":
+        try:
+            lista_temporadas_ordenada = self.quick_sort(self.lista_de_jugadores, False, "temporadas")
+        except:
+            print("Error con el archivo") 
+        else:   
             for jugador in lista_temporadas_ordenada:
+                print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['temporadas']}")
                 indice_de_jugador = lista_temporadas_ordenada.index(jugador)
-                self.crear_csv(lista_temporadas_ordenada, indice_de_jugador, False)
-            print("Información enviada exitosamente")
-        elif pregunta_csv == "no":
-            print("No se realizará la conversión a csv")
-
+            
+        #B
+            pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
+            while pregunta_csv != "si" and pregunta_csv != "no":
+                pregunta_csv = input("Tiene que responder Si o No: ").lower()
+            if pregunta_csv == "si":
+                for jugador in lista_temporadas_ordenada:
+                    indice_de_jugador = lista_temporadas_ordenada.index(jugador)
+                    self.crear_csv(lista_temporadas_ordenada, indice_de_jugador, False)
+                print("Información enviada exitosamente")
+            elif pregunta_csv == "no":
+                print("No se realizará la conversión a csv")
+        
+        #C
+            pregunta_json = input("¿Querés añadir estas estadisticas a un json? (Si|No): ").lower()
+            while pregunta_json != "si" and pregunta_json != "no":
+                pregunta_json = input("Tiene que responder Si o No: ").lower()
+            if pregunta_json == "si":
+                lista_diccionarios_jugador_temporadas = []
+                for jugador in lista_temporadas_ordenada:
+                    diccionario_jugador_temporadas = {}
+                    diccionario_jugador_temporadas.update({"Nombre" : jugador.obtener_nombre_jugador})
+                    diccionario_jugador_temporadas.update({"Temporadas Jugadas" : jugador.obtener_estadisticas_completas()['temporadas']})
+                    lista_diccionarios_jugador_temporadas.append(diccionario_jugador_temporadas)
+                self.crear_json(lista_diccionarios_jugador_temporadas)    
+            elif pregunta_json == "no":
+                print("No se realizará la conversión a json")
+        
+    def crear_json (self, lista_de_diccionarios : list[dict]) -> None:
+        nombre_de_archivo = input("Ingrese el nombre que desea que tenga el archivo: ")
+        while re.match("[a-zA-Z0-9_ ]+$", nombre_de_archivo) == None:
+            print("Caracteres invalidos en el nombre. Caracteres válidos: minúsculas, mayusculas, números y guiones bajos.")
+            nombre_de_archivo = input("Vuelva a ingresar el nombre que desea que tenga el archivo: ")
+        ruta = f"Parcial\{nombre_de_archivo}.json"
+        try:
+            with open(ruta, "w", encoding = "utf-8") as archivo_json:
+                contenido = {"Lista de jugadores" : lista_de_diccionarios}
+                json.dump(contenido, archivo_json, indent = 4)
+                print("Archivo creado")
+        except:
+            print("Error con el archivo")
+        
+            
+        
     
     
                     
@@ -343,7 +373,7 @@ if __name__ == "__main__":
     #dream_team.promedio_de_puntos_por_partido_del_equipo()#5
     #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
     #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
-    dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
+    #dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
     
 
 
