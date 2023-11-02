@@ -76,7 +76,10 @@ class Equipo():
                     estadisticas_jugador = self.lista_de_jugadores[jugador_seleccionado].obtener_estadisticas_completas()
                     print(self.lista_de_jugadores[jugador_seleccionado].obtener_nombre_jugador)
                     for clave, valor in estadisticas_jugador.items():
-                        print(f"{clave.capitalize()} : {valor}")
+                        if clave == "robos_mas_bloqueos":
+                            pass
+                        else:
+                            print(f"{clave.capitalize()} : {valor}")
                     
                     #3
                     pregunta_csv = input("¿Querés añadir estas estadisticas a un csv? (Si|No): ").lower()
@@ -229,16 +232,16 @@ class Equipo():
                 print(f"{jugador.obtener_nombre_jugador} - {jugador.obtener_estadisticas_completas()['promedio_puntos_por_partido']}")
         
         
-    def quick_sort (self, lista : list[Jugador], ascendente : bool, clave):
+    def quick_sort (self, lista_objetos : list[Jugador], ascendente : bool, clave):
         """
         Ordena los datos de menor a mayor o de mayor a menor dependiendo si ascendente es True o False.
         Recibe: self, una lista de objetos Jugador, un booleano y una clave.
         Devuelve: devuelve la función aplicada a listas cada vez más chicas hasta que este ordenada.
         """
-        if len(lista) < 2:
-            return lista
+        if len(lista_objetos) < 2:
+            return lista_objetos
         else:
-            lista_de_jugadores_a_ordenar = lista.copy()
+            lista_de_jugadores_a_ordenar = lista_objetos.copy()
             if ascendente:
                 pivot = lista_de_jugadores_a_ordenar.pop()
             else:
@@ -393,6 +396,22 @@ class Equipo():
                 print("Archivo creado")
         except:
             print("Error con el archivo")
+    
+    #9
+    #A, C
+    def mostrar_jugadores_robos_mas_bloqueos (self):
+        lista_ordenada = self.quick_sort(self.lista_de_jugadores, False, "robos_mas_bloqueos")
+        cantidad_de_jugadores = len(lista_ordenada)
+        jugadores_a_imprimir = input("¿Cuántos jugadores ordenados desea ver?: ")
+        while re.match("[1-9]+", jugadores_a_imprimir) == None or int(jugadores_a_imprimir) > cantidad_de_jugadores:
+            jugadores_a_imprimir = input("Cantidad no contemplada, ingrese una valida: ")
+        jugadores_a_imprimir = int(jugadores_a_imprimir)
+        
+        for i in range (jugadores_a_imprimir):
+            print (f"{lista_ordenada[i].obtener_nombre_jugador} | {lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos']}")
+        
+            
+            
         
             
         
@@ -414,7 +433,8 @@ if __name__ == "__main__":
     #dream_team.promedio_de_puntos_por_partido_del_equipo()#5
     #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
     #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
-    dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
+    #dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
+    dream_team.mostrar_jugadores_robos_mas_bloqueos()#9
     
 
 

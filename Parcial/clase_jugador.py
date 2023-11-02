@@ -43,7 +43,8 @@ class Jugador():
         cantidad_de_estadisticas = len(self.obtener_estadisticas_jugador.obtener_claves_de_estadisticas)
         estadisticas_completas = {}
         for i in range (cantidad_de_estadisticas):
-            estadisticas_completas.update({self.obtener_estadisticas_jugador.obtener_claves_de_estadisticas[i] : self.obtener_estadisticas_jugador.obtener_valores_de_estadisticas[i]}) 
+            estadisticas_completas.update({self.obtener_estadisticas_jugador.obtener_claves_de_estadisticas[i] : self.obtener_estadisticas_jugador.obtener_valores_de_estadisticas[i]})
+            estadisticas_completas.update({"robos_mas_bloqueos" : self.obtener_estadisticas_jugador.obtener_robos_totales + self.obtener_estadisticas_jugador.obtener_bloqueos_totales}) 
         return estadisticas_completas
     
         
