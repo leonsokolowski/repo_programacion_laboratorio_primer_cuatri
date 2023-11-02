@@ -398,17 +398,32 @@ class Equipo():
             print("Error con el archivo")
     
     #9
-    #A, C
-    def mostrar_jugadores_robos_mas_bloqueos (self):
+    #A, B, C
+    def mostrar_jugadores_robos_mas_bloqueos (self) -> None:
+        """
+        Ordena la lista de jugadores de manera descendente en base a la suma de robos y bloqueos totales.
+        Pregunta cuantos jugadores desea ver, validando ese numero. 
+        Luego los muestra junto con el porcentaje que representan del mayor (que sería 100%) y con la cantidad entera de la suma.
+        Recibe: self.
+        Devuelve: nada.
+        """
+        #A
         lista_ordenada = self.quick_sort(self.lista_de_jugadores, False, "robos_mas_bloqueos")
+        print("La lista fue ordenada en base a la suma de los robos y los bloqueos totales.")
+        #C
         cantidad_de_jugadores = len(lista_ordenada)
         jugadores_a_imprimir = input("¿Cuántos jugadores ordenados desea ver?: ")
         while re.match("[1-9]+", jugadores_a_imprimir) == None or int(jugadores_a_imprimir) > cantidad_de_jugadores:
             jugadores_a_imprimir = input("Cantidad no contemplada, ingrese una valida: ")
         jugadores_a_imprimir = int(jugadores_a_imprimir)
+        #B
+        jugador_con_mayor_suma = lista_ordenada[0].obtener_estadisticas_completas()['robos_mas_bloqueos']
+        uno_porciento = jugador_con_mayor_suma / 100
         
         for i in range (jugadores_a_imprimir):
-            print (f"{lista_ordenada[i].obtener_nombre_jugador} | {lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos']}")
+            porcentaje = lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos'] / uno_porciento
+            porcentaje = str(porcentaje)
+            print (f"{lista_ordenada[i].obtener_nombre_jugador} | {lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos']} | Representa el {porcentaje[:4]}%")
         
             
             
@@ -434,7 +449,7 @@ if __name__ == "__main__":
     #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
     #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
     #dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
-    dream_team.mostrar_jugadores_robos_mas_bloqueos()#9
+    #dream_team.mostrar_jugadores_robos_mas_bloqueos()#9
     
 
 
