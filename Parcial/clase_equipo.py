@@ -333,7 +333,7 @@ class Equipo():
                 print("Se creo la tabla de jugadores")
             except sqlite3.OperationalError:
                 print("La tabla de jugadores ya existe")
-                sentencia = "delete from jugadores"
+                sentencia = "delete from jugadores where 1=1"
                 conexion.execute(sentencia)
                 for jugador in lista_temporadas_ordenada:
                         conexion.execute("insert into jugadores(Nombre,Temporadas) values (?,?)" , (f"dato borrado {jugador.obtener_nombre_jugador}", jugador.obtener_estadisticas_completas()['temporadas']))
@@ -398,32 +398,82 @@ class Equipo():
             print("Error con el archivo")
     
     #9
-    #A, C
-    def mostrar_jugadores_robos_mas_bloqueos (self):
+    #A, B, C
+    def mostrar_jugadores_robos_mas_bloqueos (self) -> None:
+        """
+        Ordena la lista de jugadores de manera descendente en base a la suma de robos y bloqueos totales.
+        Pregunta cuantos jugadores desea ver, validando ese numero. 
+        Luego los muestra junto con el porcentaje que representan del mayor (que sería 100%) y con la cantidad entera de la suma.
+        Recibe: self.
+        Devuelve: nada.
+        """
+        #A
         lista_ordenada = self.quick_sort(self.lista_de_jugadores, False, "robos_mas_bloqueos")
+        print("La lista fue ordenada en base a la suma de los robos y los bloqueos totales.")
+        #C
         cantidad_de_jugadores = len(lista_ordenada)
         jugadores_a_imprimir = input("¿Cuántos jugadores ordenados desea ver?: ")
         while re.match("[1-9]+", jugadores_a_imprimir) == None or int(jugadores_a_imprimir) > cantidad_de_jugadores:
             jugadores_a_imprimir = input("Cantidad no contemplada, ingrese una valida: ")
         jugadores_a_imprimir = int(jugadores_a_imprimir)
+        #B
+        jugador_con_mayor_suma = lista_ordenada[0].obtener_estadisticas_completas()['robos_mas_bloqueos']
+        uno_porciento = jugador_con_mayor_suma / 100
         
         for i in range (jugadores_a_imprimir):
-            print (f"{lista_ordenada[i].obtener_nombre_jugador} | {lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos']}")
-        
-            
-            
-        
-            
-        
+            porcentaje = lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos'] / uno_porciento
+            porcentaje = str(porcentaje)
+            print (f"{lista_ordenada[i].obtener_nombre_jugador} | {lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos']} | Representa el {porcentaje[:4]}%")
     
-    
-                    
-
-              
+    #10
+    def crear_base_datos_posiciones (self) -> None:
+        """
+        Crea una lista con las posiciones de los jugadores sin repetir. Luego la agrega a una base de datos.
+        Recibe: self.
+        Devuelve: nada.
+        """
+        lista_posiciones = []
+        for jugador in self.lista_de_jugadores:
+            posicion = jugador.obtener_posicion_jugador
+            if posicion in lista_posiciones:
+                pass
+            else:
+                lista_posiciones.append(posicion)
+        print(lista_posiciones)
         
+        cantidad_posiciones = len(lista_posiciones)
         
-    
+        with sqlite3.connect("Parcial/bd_posiciones.db") as conexion:
+            try:
+                sentencia = """ create table `posiciones`
+                                (
+                                        `id` integer primary key autoincrement,
+                                        `posicion` TEXT    
+                                )
+                
+                            """
+                conexion.execute(sentencia)
+                print("Se creo la tabla de posiciones")
+            except sqlite3.OperationalError:
+                print("La tabla de posiciones ya existe")
+                sentencia = "delete from `posiciones` where 1=1"
+                conexion.execute(sentencia)
+                for i in range (cantidad_posiciones):
+                    #print(lista_posiciones[i])
+                    conexion.execute(f"insert into `posiciones`(`posicion`) values ('{lista_posiciones[i]}');")
+                conexion.commit()
+                print("Se borraron los datos anteriores y se agragaron nuevos")
             
+            else:
+                try:
+                    for i in range (cantidad_posiciones):
+                        #print(lista_posiciones[i])
+                        conexion.execute(f"insert into `posiciones`(`posicion`) values ('{lista_posiciones[i]}');")
+                    conexion.commit()
+                    print("Se agragaron datos")
+                except:
+                    print("Error")
+         
         
 if __name__ == "__main__":             
     dream_team = Equipo(ruta_de_archivo)
@@ -434,7 +484,8 @@ if __name__ == "__main__":
     #dream_team.seleccionar_jugador_y_mostrar_si_pertence_al_sdlf()#6
     #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
     #dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
-    dream_team.mostrar_jugadores_robos_mas_bloqueos()#9
+    #dream_team.mostrar_jugadores_robos_mas_bloqueos()#9
+    dream_team.crear_base_datos_posiciones()#10
     
 
 

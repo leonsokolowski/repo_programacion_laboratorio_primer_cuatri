@@ -33,7 +33,10 @@ def imprimir_menu ():
     6. Mostrar al jugador con mayor cantidad de rebotes.
     7. Mostrar los nombres y las temporadas de todos los jugadores del Dream Team ordenados de manera descendente segun la 
        cantidad de temporadas que jugó cada uno. (Tiene la opción de cargarlas a un CSV y/o a un JSON)
-    8. Salir.
+    8. Ordenar la lista de jugadores de manera descendente en base a la suma de las estadisticas de robos totales y bloqueos
+       totales, ademas crea un porcentaje de esta cantidad. Usted elige la cantidad de jugadores que se mostraran.
+    9. Crear base de datos de todas las posiciones que existen en el baloncesto.
+    10.Salir.
     """
     print(menu)
 
@@ -49,7 +52,7 @@ def dream_team_app (equipo: Equipo) -> None:
         imprimir_menu()
         
         opcion = input("Ingrese el número que desee: ")
-        while re.match("[1-7]$", opcion) == None:
+        while re.match("[0-9]+$", opcion) == None:
             print("Opción incorrecta.")
             opcion = input("Ingrese un número valido: ")
         opcion = int(opcion)
@@ -70,7 +73,13 @@ def dream_team_app (equipo: Equipo) -> None:
             case 7:
                 equipo.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()
             case 8:
+                equipo.mostrar_jugadores_robos_mas_bloqueos()
+            case 9:
+                equipo.crear_base_datos_posiciones()
+            case 10:
                 break
+            case _:
+                print("Ingrese una opción correcta")
         
         limpiar_consola()
 
