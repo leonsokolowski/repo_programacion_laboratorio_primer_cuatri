@@ -35,8 +35,12 @@ def imprimir_menu ():
        cantidad de temporadas que jugó cada uno. (Tiene la opción de cargarlas a un CSV y/o a un JSON)
     8. Ordenar la lista de jugadores de manera descendente en base a la suma de las estadisticas de robos totales y bloqueos
        totales, ademas crea un porcentaje de esta cantidad. Usted elige la cantidad de jugadores que se mostraran.
+<<<<<<< HEAD
     9. Crear base de datos de todas las posiciones que existen en el baloncesto.
     10.Salir.
+=======
+    9. Salir.
+>>>>>>> 963e490f0fe6cc691654303742f4e6f3ebe89344
     """
     print(menu)
 
@@ -52,7 +56,11 @@ def dream_team_app (equipo: Equipo) -> None:
         imprimir_menu()
         
         opcion = input("Ingrese el número que desee: ")
+<<<<<<< HEAD
         while re.match("[0-9]+$", opcion) == None:
+=======
+        while re.match("[1-9]$", opcion) == None:
+>>>>>>> 963e490f0fe6cc691654303742f4e6f3ebe89344
             print("Opción incorrecta.")
             opcion = input("Ingrese un número valido: ")
         opcion = int(opcion)
@@ -75,8 +83,11 @@ def dream_team_app (equipo: Equipo) -> None:
             case 8:
                 equipo.mostrar_jugadores_robos_mas_bloqueos()
             case 9:
+<<<<<<< HEAD
                 equipo.crear_base_datos_posiciones()
             case 10:
+=======
+>>>>>>> 963e490f0fe6cc691654303742f4e6f3ebe89344
                 break
             case _:
                 print("Ingrese una opción correcta")

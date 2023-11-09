@@ -424,6 +424,15 @@ class Equipo():
             porcentaje = lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos'] / uno_porciento
             porcentaje = str(porcentaje)
             print (f"{lista_ordenada[i].obtener_nombre_jugador} | {lista_ordenada[i].obtener_estadisticas_completas()['robos_mas_bloqueos']} | Representa el {porcentaje[:4]}%")
+<<<<<<< HEAD
+=======
+        
+            
+            
+        
+            
+        
+>>>>>>> 963e490f0fe6cc691654303742f4e6f3ebe89344
     
     #10
     def crear_base_datos_posiciones (self) -> None:
@@ -485,7 +494,10 @@ if __name__ == "__main__":
     #dream_team.calcular_y_mostrar_jugador_con_mas_rebotes()#7
     #dream_team.listar_jugadores_ordenados_por_la_cantidad_de_temporadas()#8 A y B
     #dream_team.mostrar_jugadores_robos_mas_bloqueos()#9
+<<<<<<< HEAD
     dream_team.crear_base_datos_posiciones()#10
+=======
+>>>>>>> 963e490f0fe6cc691654303742f4e6f3ebe89344
     
 
 
